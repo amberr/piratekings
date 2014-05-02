@@ -1,0 +1,20 @@
+.circle{
+height:100px;
+width:100px;
+background-color: #123456;
+-moz-border-radius: 50px;
+-webkit-border-radius: 50px;
+border-radius: 50px;
+border: 3px solid #069;
+position: absolute;
+}
+
+.circle p{
+color: #fff;
+font-family: sans-serif;
+font-size:20px;
+text-align:center;
+line-height:100px;
+top:-18px;
+position: relative;
+}

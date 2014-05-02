@@ -1,0 +1,1 @@
+This repo contains all code for the Pirate Kings' project for CS 247.
