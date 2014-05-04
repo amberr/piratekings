@@ -1,11 +1,29 @@
 <html>
   <head>
-    <title>Example webrtc.io</title>
+    <title>Dynamixx</title>
     <link type="text/css" href="/style.css" rel="stylesheet"></link>
 
     <script src="/webrtc.io.js"></script>
+    <script src='https://cdn.firebase.com/js/client/1.0.6/firebase.js'></script>
   </head>
   <body onload="init()">
+
+    <div id="initiation">
+      <div id="clamps">
+        <div id="request-clamps" class="request-control">Request control</div>
+        <div id="giveup-clamps" class="giveup-control">Give up control</div>
+      </div>
+      <div id="video-control">
+        <div id="request-video" class="request-control">Request control</div>
+        <div id="giveup-video" class="giveup-control">Give up control</div>
+      </div>
+      <div id="audio-control">
+        <div id="request-audio" class="request-control">Request control</div>
+        <div id="giveup-audio" class="giveup-control">Give up control</div>
+      </div>
+      <div id="start-session">Start Session</div>
+    </div>
+
     <div id="videos">
       <video id="you" class="flip" autoplay width="263" height="200" style="position: absolute; left: 0px; bottom: 0px;"></video>
     </div>

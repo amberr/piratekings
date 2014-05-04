@@ -1,5 +1,9 @@
 var videos = [];
 var PeerConnection = window.PeerConnection || window.webkitPeerConnection00 || window.webkitRTCPeerConnection || window.mozRTCPeerConnection || window.RTCPeerConnection;
+var fb_instance;
+var fb_new_chat_room;
+var fb_instance_users;
+var dom = false;
 
 function getNumPerRow() {
   var len = videos.length;
@@ -92,6 +96,7 @@ function setHash() {
 
     window.location.hash = randomstring;
     location.reload();
+    return randomstring;
 }
 
 function initNewRoom() {
@@ -178,32 +183,48 @@ function initChat() {
 
 
 function init() {
-    /* Generate new chat hash if needed */
+  /* Generate new chat hash if needed */
   var url_segments = document.location.href.split("#");
-  if(!url_segments[1]){
-    setHash();
-    console.log("hash reset");
+  var hash = url_segments[1];
+  if(!hash){
+    hash = setHash();
   } else {
-      if(PeerConnection) {
-    rtc.createStream({
-      "video": {"mandatory": {}, "optional": []},
-      "audio": true
-    }, function(stream) {
-      document.getElementById('you').src = URL.createObjectURL(stream);
-      document.getElementById('you').play();
-      //videos.push(document.getElementById('you'));
-      //rtc.attachStream(stream, 'you');
-      //subdivideVideos();
-    });
-  } else {
-    alert('Your browser is not supported or you have to turn on flags. In chrome you go to chrome://flags and turn on Enable PeerConnection remember to restart chrome');
+    if(PeerConnection) {
+      rtc.createStream({
+        "video": {"mandatory": {}, "optional": []},
+        "audio": true
+      }, function(stream) {
+        document.getElementById('you').src = URL.createObjectURL(stream);
+        document.getElementById('you').play();
+        //videos.push(document.getElementById('you'));
+        //rtc.attachStream(stream, 'you');
+        //subdivideVideos();
+      });
+    } else {
+      alert('Your browser is not supported or you have to turn on flags. In chrome you go to chrome://flags and turn on Enable PeerConnection remember to restart chrome');
     }
+      /* Connect to Firebase */
+    fb_instance = new Firebase("https://dynamixxx.firebaseio.com");
+    fb_new_chat_room = fb_instance.child('chatrooms').child(hash);
+    fb_instance_users = fb_new_chat_room.child('users');
+    fb_instance_users.once('value', function(snapshot) { 
+      var num_users = snapshot.numChildren();
+      if(num_users > 2) {
+        // quit the app
+      } else if (num_users == 0) {
+        dom = true;
+      }
+          /* Prompt name and add user to chat */
+      var username = window.prompt(dom? "What will your partner call you?": "What would you like to be called?");
+      if(!username){
+        username = "anonymous"+Math.floor(Math.random()*1111);
+      }
+      fb_instance_users.push({ name: username });
+    });
 
-
+    /* Set up RTC */
     var room = window.location.hash.slice(1);
-
     rtc.connect("ws:" + window.location.href.substring(window.location.protocol.length).split('#')[0], room);
-
     rtc.on('add remote stream', function(stream, socketId) {
       console.log("ADDING REMOTE STREAM...");
       var clone = cloneVideo('you', socketId);
@@ -219,8 +240,6 @@ function init() {
     initNewRoom();
     initChat();
   }
-
-  
 }
 
 window.onresize = function(event) {
