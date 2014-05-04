@@ -81,13 +81,9 @@ function initFullScreen() {
   });
 }
 
-function initNewRoom() {
-  var button = document.getElementById("newRoom");
-
-  button.addEventListener('click', function(event) {
-
+function setHash() {
     var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
-    var string_length = 8;
+    var string_length = 30;
     var randomstring = '';
     for(var i = 0; i < string_length; i++) {
       var rnum = Math.floor(Math.random() * chars.length);
@@ -96,7 +92,14 @@ function initNewRoom() {
 
     window.location.hash = randomstring;
     location.reload();
-  })
+}
+
+function initNewRoom() {
+  var button = document.getElementById("newRoom");
+
+  button.addEventListener('click', function(event) {
+    setHash();
+  });
 }
 
 
@@ -175,7 +178,13 @@ function initChat() {
 
 
 function init() {
-  if(PeerConnection) {
+    /* Generate new chat hash if needed */
+  var url_segments = document.location.href.split("#");
+  if(!url_segments[1]){
+    setHash();
+    console.log("hash reset");
+  } else {
+      if(PeerConnection) {
     rtc.createStream({
       "video": {"mandatory": {}, "optional": []},
       "audio": true
@@ -188,27 +197,30 @@ function init() {
     });
   } else {
     alert('Your browser is not supported or you have to turn on flags. In chrome you go to chrome://flags and turn on Enable PeerConnection remember to restart chrome');
+    }
+
+
+    var room = window.location.hash.slice(1);
+
+    rtc.connect("ws:" + window.location.href.substring(window.location.protocol.length).split('#')[0], room);
+
+    rtc.on('add remote stream', function(stream, socketId) {
+      console.log("ADDING REMOTE STREAM...");
+      var clone = cloneVideo('you', socketId);
+      document.getElementById(clone.id).setAttribute("class", "");
+      rtc.attachStream(stream, clone.id);
+      subdivideVideos();
+    });
+    rtc.on('disconnect stream', function(data) {
+      console.log('remove ' + data);
+      removeVideo(data);
+    });
+    initFullScreen();
+    initNewRoom();
+    initChat();
   }
 
-
-  var room = window.location.hash.slice(1);
-
-  rtc.connect("ws:" + window.location.href.substring(window.location.protocol.length).split('#')[0], room);
-
-  rtc.on('add remote stream', function(stream, socketId) {
-    console.log("ADDING REMOTE STREAM...");
-    var clone = cloneVideo('you', socketId);
-    document.getElementById(clone.id).setAttribute("class", "");
-    rtc.attachStream(stream, clone.id);
-    subdivideVideos();
-  });
-  rtc.on('disconnect stream', function(data) {
-    console.log('remove ' + data);
-    removeVideo(data);
-  });
-  initFullScreen();
-  initNewRoom();
-  initChat();
+  
 }
 
 window.onresize = function(event) {
