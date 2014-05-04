@@ -2,43 +2,61 @@
   <head>
     <title>Dynamixx</title>
     <link type="text/css" href="/style.css" rel="stylesheet"></link>
-
+    <link href='http://fonts.googleapis.com/css?family=Belleza' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
     <script src="/webrtc.io.js"></script>
     <script src='https://cdn.firebase.com/js/client/1.0.6/firebase.js'></script>
   </head>
   <body onload="init()">
+    <div id="wrapper">
 
-    <div id="initiation">
-      <div id="clamps">
-        <div id="request-clamps" class="request-control">Request control</div>
-        <div id="giveup-clamps" class="giveup-control">Give up control</div>
+      <div id="headertitle">
+        <span id="title">DYNAMIXX</span>
+        <span id="status">You are <b>DOMINANT</b></span>
       </div>
-      <div id="video-control">
-        <div id="request-video" class="request-control">Request control</div>
-        <div id="giveup-video" class="giveup-control">Give up control</div>
-      </div>
-      <div id="audio-control">
-        <div id="request-audio" class="request-control">Request control</div>
-        <div id="giveup-audio" class="giveup-control">Give up control</div>
-      </div>
-      <div id="start-session">Start Session</div>
-    </div>
 
-    <div id="videos">
-      <video id="you" class="flip" autoplay width="263" height="200" style="position: absolute; left: 0px; bottom: 0px;"></video>
-    </div>
-    <div id="chatbox">
-      <div id="hideShowMessages" class="button">toggle chat</div>
-      <div id="messages">
-      </div>
-      <input id="chatinput" type="text" placeholder="Message:"/>
-    </div>
+      <div id="initiation">
+        <div id="clamps" class="wells">
+          <p>Nipple Clamps</p>
+          <input id="request-clamps" type="submit" value="Request control" class="request-control"><p>
+          <input id="giveup-clamps" type="submit" value="Give up control" class="giveup-control">
+        </div>
+        <div id="video-control" class="wells">
+          <p>Video</p>
+          <input id="request-video" type="submit" value="Request control" class="request-control"><p>
+          <input id="giveup-video" type="submit" value="Give up control" class="giveup-control">
 
-    <div class="buttonBox">
+        </div>
+        <div id="audio-control" class="wells">
+          <p>Audio</p>
+          <input id="request-audio" type="submit" value="Request control" class="request-control"><p>
+          <input id="giveup-audio" type="submit" value="Give up control" class="giveup-control">
+        </div>
+
+        <div id="start-session">Start Session</div><p>
+
+          <div id="chatbox">    
+            <div id="messages">
+            </div>
+            <input id="chatinput" type="text" placeholder="type something here"/>
+            </div>
+          </div>  
+         </div>
+
+
+      <div id="play">
+        <div id="videos">
+          <video id="you" class="flip" autoplay width="263" height="200" style="position: absolute; left: 0px; bottom: 0px;"></video>
+        </div>
+        
+      </div>
+
+   <!-- <div class="buttonBox">
       <div id="fullscreen" class="button">Enter Full Screen</div>
       <div id="newRoom" class="button">Create A New Room</div>
     </div>
-    
+    -->
+</div>
     <script src="/script.js"></script>
   </body>
 </html>

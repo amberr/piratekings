@@ -1,5 +1,8 @@
 html, body {
   height: 100%;
+  background-color: black;
+  color: white;
+  font-family: 'Open Sans', sans-serif;
 }
 
 html {
@@ -9,13 +12,38 @@ html {
 body {
   padding: 0;
   margin: 0;
-  background: -moz-linear-gradient(top, rgba(238,238,238,1) 0%, rgba(238,238,238,0) 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(238,238,238,1)), color-stop(100%,rgba(238,238,238,0)));
-  background: -webkit-linear-gradient(top, rgba(238,238,238,1) 0%,rgba(238,238,238,0) 100%);
-  background: -o-linear-gradient(top, rgba(238,238,238,1) 0%,rgba(238,238,238,0) 100%);
-  background: -ms-linear-gradient(top, rgba(238,238,238,1) 0%,rgba(238,238,238,0) 100%);
-  background: linear-gradient(to bottom, rgba(238,238,238,1) 0%,rgba(238,238,238,0) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#00eeeeee',GradientType=0 );
+  
+}
+
+#wrapper{
+  width: 900px;
+  float: center;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+#headertitle{
+  width: 100%;
+  height: 60px;
+  vertical-align: middle;
+}
+
+#title{
+  font-size: 48px;
+  text-align: left;
+  float: left;
+  font-family: 'Belleza', sans-serif;
+  vertical-align: middle;
+}
+
+#status{
+
+position: relative;
+float: right;
+vertical-align: middle;
+top: 15px;
+font-size: 20px;
+
 }
 
 #videos {
@@ -28,35 +56,35 @@ body {
 }
 
 #chatbox {
-  position: absolute;
   right: 20px;
   bottom: 0px;
-  z-index: 1;
+  z-index: 20;
 }
 
 #chatinput {
   background: none repeat scroll 0 0 #F9F9F9;
-  border: 1px solid #CCCCCC;
-  border-radius: 0px 0px 5px 5px;
-  font: 300 18px/40px 'light','Helvetica Neue',Arial,Helvetica,sans-serif;
+  font: 300 18px/40px 'light','Open Sans',Arial,Helvetica,sans-serif;
   height: 40px;
   letter-spacing: 1px;
   margin-bottom: 0px;
   padding: 5px 10px;
-  width: 277px;
+  width: 100%;
+  background-color: rgba(255,255,255,0.5);
+  z-index: 9999;
 }
 
 #messages {
   overflow: scroll;
   background: none repeat scroll 0 0 #F9F9F9;
-  border: 1px solid #CCCCCC;
-  border-radius: 5px 5px 0px 0px;
-  font: 300 18px/40px 'light','Helvetica Neue',Arial,Helvetica,sans-serif;
-  height: 400px;
+
+  font: 300 18px/40px 'light','Open Sans',Arial,Helvetica,sans-serif;
+  height: 300px;
   letter-spacing: 1px;
   margin-bottom: 0px;
   padding: 5px 10px;
-  width: 255px;
+  width: 100%;
+  background-color: rgba(255,255,255,0.5);
+  
 }
 
 .flip {
@@ -69,6 +97,73 @@ body {
   left: 2px;
   z-index: 1;
 }
+
+#initiation{
+  width: 100%;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.wells{
+  width: 33%;
+  height: 400px;
+  position: relative;
+  float: left;
+  text-align: center;
+  z-index: 99;
+
+}
+
+.request-control {
+  position: relative;
+  vertical-align: middle;
+  width: 250px;
+  height: 40px;
+  padding: 0;
+  font-size: 20px;
+  color: white;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  background: #8e44ad;
+  border: 0;
+  border-bottom: 2px solid #80399d;
+  cursor: pointer;
+  -webkit-box-shadow: inset 0 -2px #80399d;
+  box-shadow: inset 0 -2px #80399d;
+}
+.request-control:active {
+  top: 1px;
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+
+.giveup-control {
+  position: relative;
+  vertical-align: top;
+  width: 250px;
+  height: 40px;
+  padding: 0;
+  font-size: 20px;
+  color:white;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  background: #859596;
+  border: 0;
+  border-bottom: 2px solid #95a5a6;
+  -webkit-box-shadow: inset 0 -2px #95a5a6;
+  box-shadow: inset 0 -2px #95a5a6;
+}
+
+.giveup-control:active {
+  top: 1px;
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+
 .button {
   -moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
   -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
