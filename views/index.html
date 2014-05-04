@@ -16,43 +16,44 @@
       </div>
 
       <div id="initiation">
+        <center>
         <div id="clamps" class="wells">
           <p>Nipple Clamps</p>
+          <img src="/clamps.png"><br/>
           <input id="request-clamps" type="submit" value="Request control" class="request-control"><p>
           <input id="giveup-clamps" type="submit" value="Give up control" class="giveup-control">
         </div>
         <div id="video-control" class="wells">
           <p>Video</p>
+          <img src="/blind.png"><br/>
           <input id="request-video" type="submit" value="Request control" class="request-control"><p>
           <input id="giveup-video" type="submit" value="Give up control" class="giveup-control">
 
         </div>
         <div id="audio-control" class="wells">
           <p>Audio</p>
+          <img src="/mute.png"><br/>
           <input id="request-audio" type="submit" value="Request control" class="request-control"><p>
           <input id="giveup-audio" type="submit" value="Give up control" class="giveup-control">
         </div>
 
 
-        <center><input id="start-session" type="submit" value="Star Session" class="giveup-control"></center>
+        <input id="start-session" type="submit" value="Start Session" class="start-inactive"></center>
         <br/><br/>
 
-          <div id="chatbox">    
-            <div id="messages">
-            </div>
-            <input id="chatinput" type="text" placeholder="Message:"/>
-            </div>
-          </div>  
-         </div>
+        <div id="chatbox">
+          <div id="messages">
+          </div>
+          <input id="chatinput" type="text" placeholder="Message:"/>
+        </div>
 
 
-       <div id="play">
+      <div id="play">
         <div id="videos">
           <video id="you" class="flip" autoplay width="263" height="200" style="position: absolute; left: 0px; bottom: 0px;"></video>
         </div>
         
       </div>
-
 
    <!-- <div class="buttonBox">
       <div id="fullscreen" class="button">Enter Full Screen</div>
