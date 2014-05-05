@@ -56,8 +56,12 @@ function setWH(video, i) {
 function cloneVideo(domId, socketId) {
   var video = document.getElementById(domId);
   var clone = video.cloneNode(false);
-  clone.id = "remote" + socketId;
-  document.getElementById('videos').appendChild(clone);
+  var div = document.createElement('div');
+  div.id = 'them-overlay';
+  div.className = 'overlay';
+  clone.id = 'them';
+  div.appendChild(clone);
+  document.getElementById('videos').appendChild(div);
   videos.push(clone);
   return clone;
 }
@@ -177,6 +181,27 @@ function initChat() {
   });
 }
 
+function toggleAudioMute(div) {
+  toggleVideoDisplay(div);
+    toggleVideoDisplay(div);
+  var isAudioMuted = $(div).prop('muted');
+    if (isAudioMuted) {
+      $(div).prop('muted', false);
+    } else {
+      $(div).prop('muted', true);
+    }
+    isAudioMuted = !isAudioMuted;
+  }
+
+function toggleVideoDisplay(div) {
+  var hidden = $(div).css('visibility');
+  if (hidden == 'hidden') {
+    $(div).css('visibility', 'visible');
+  } else {
+      $(div).css('visibility', 'hidden');
+  }
+}
+
 
 function init() {
   /* Generate new chat hash if needed */
@@ -232,6 +257,7 @@ function init() {
           }, function(stream) {
             document.getElementById('you').src = URL.createObjectURL(stream);
             document.getElementById('you').play();
+            toggleAudioMute('#you');
           });
         } else {
           alert('Your browser is not supported or you have to turn on flags. In chrome you go to chrome://flags and turn on Enable PeerConnection remember to restart chrome');
@@ -247,6 +273,7 @@ function init() {
         document.getElementById(clone.id).setAttribute("class", "partner-video");
         rtc.attachStream(stream, clone.id);
         subdivideVideos();
+        toggleAudioMute('#them');
       });
       rtc.on('disconnect stream', function(data) {
         console.log('remove ' + data);
@@ -475,6 +502,9 @@ function startChat() {
 
   var fb_commands = fb_new_chat_room.child('commands');
   var fb_warnings = fb_new_chat_room.child('warnings');
+
+  toggleAudioMute('#them');
+  toggleAudioMute('#you');
 
   // if(dom) {
   //   $("#dom-controls").show();
