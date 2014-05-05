@@ -3,10 +3,19 @@
     <title>Dynamixx</title>
     <link type="text/css" href="/style.css" rel="stylesheet"></link>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Belleza' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
     <script src="/webrtc.io.js"></script>
     <script src='https://cdn.firebase.com/js/client/1.0.6/firebase.js'></script>
   </head>
   <body onload="init()">
+    <div id="wrapper">
+
+
+    <div id="headertitle">
+        <span id="title">DYNAMIXX</span>
+        <span id="status">You are <b>DOMINANT</b></span>
+    </div>
 
     <div id="dom-initiation" class="initiation">
       <div id="clamps-control" class="option">
@@ -60,18 +69,29 @@
         <div id="sub-audio-negotiated" class="good-to-go" style="display:none">OK!</div>
       </div>
       <div class="start-session">Start session</div>
+
+      <div id="chatbox">
+          <div id="messages">
+          </div>
+          <input id="chatinput" type="text" placeholder="Type your message here..."/>
+        </div>
+
+
+      <div id="play">
+        <div id="videos">
+          <video id="you" class="flip" autoplay width="263" height="200" style="position: absolute; left: 0px; bottom: 0px;"></video>
+        </div>
+
+
     </div>
 
-    <div id="videos">
-      <video id="you" class="flip" autoplay width="263" height="200" style="position: absolute; left: 0px; bottom: 0px;"></video>
+   <!-- <div class="buttonBox">
+      <div id="fullscreen" class="button">Enter Full Screen</div>
+      <div id="newRoom" class="button">Create A New Room</div>
+>>>>>>> ef940660a3a119f15068b63048ad3a8e914e9a06
     </div>
-    <div id="chatbox">
-      <div id="hideShowMessages" class="button">toggle chat</div>
-      <div id="messages">
-      </div>
-      <input id="chatinput" type="text" placeholder="Type your message here"/>
-    </div>
-    
+    -->
+</div>
     <script src="/script.js"></script>
   </body>
 </html>

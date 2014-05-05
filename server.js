@@ -17,8 +17,16 @@ app.get('/style.css', function(req, res) {
   res.sendfile(__dirname + '/public/css/style.css');
 });
 
-app.get('/fullscrean.png', function(req, res) {
-  res.sendfile(__dirname + '/public/img/fullscrean.png');
+app.get('/clamps.png', function(req, res) {
+  res.sendfile(__dirname + '/public/img/clamps.png');
+});
+
+app.get('/blind.png', function(req, res) {
+  res.sendfile(__dirname + '/public/img/blind.png');
+});
+
+app.get('/mute.png', function(req, res) {
+  res.sendfile(__dirname + '/public/img/mute.png');
 });
 
 app.get('/script.js', function(req, res) {
