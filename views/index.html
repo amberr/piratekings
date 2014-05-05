@@ -17,60 +17,91 @@
         <span id="dom-status" class="status" style="display:none">You are a <b>DOM</b></span>
         <span id="sub-status" class="status" style="display:none">You are a <b>SUB</b></span>
     </div>
-
+    <p></p>
     <div id="dom-initiation" class="initiation">
+     <center>
       <div id="clamps-control" class="option">
-        CLAMPS
-        <div id="request-clamps" class="request-control">Request control</div>
+        <center>
+        <p><b>Step 1:</b> Clamps Control</p>
+        <img src="/clamps.png" class="images"><br/>
+        <div id="request-clamps" class="request-control">Request control</div><p>
         <div id="giveup-clamps" class="giveup-control">Give up control</div>
         <div id="awaiting-clamps-permission" class="awaiting-response" style="display:none">Request sent</div>
-        <div id="clamps-permission-denied" class="request-denied" style="display:none">Request denied</div>
+        <div id="clamps-permission-denied" class="request-denied" style="display:none"></div>
         <div id="dom-clamps-negotiated" class="good-to-go" style="display:none">OK!</div>
+         </center>
       </div>
+      
       <div id="video-control" class="option">
-        VIDEO CONTROL
-        <div id="request-video" class="request-control">Request control</div>
+        <center>
+        <p><b>Step 2:</b> Video Control</p>
+        <img src="/blind.png" class="images"><br/>
+        <div id="request-video" class="request-control">Request control</div><p>
         <div id="giveup-video" class="giveup-control">Give up control</div>
         <div id="awaiting-video-permission" class="awaiting-response" style="display:none">Request sent</div>
-        <div id="video-permission-denied" class="request-denied" style="display:none">Request denied</div>
+        <div id="video-permission-denied" class="request-denied" style="display:none"></div>
         <div id="dom-video-negotiated" class="good-to-go" style="display:none">OK!</div>
+         </center>
       </div>
+
       <div id="audio-control" class="option">
-        AUDIO CONTROL
-        <div id="request-audio" class="request-control">Request control</div>
+        <center>
+        <p><b>Step 3:</b> Audio Control</p>
+        <img src="/mute.png" class="images"><br/>
+        <div id="request-audio" class="request-control">Request control</div><p>
         <div id="giveup-audio" class="giveup-control">Give up control</div>
         <div id="awaiting-audio-permission" class="awaiting-response" style="display:none">Request sent</div>
-        <div id="audio-permission-denied" class="request-denied" style="display:none">Request denied</div>
+        <div id="audio-permission-denied" class="request-denied" style="display:none"></div>
         <div id="dom-audio-negotiated" class="good-to-go" style="display:none">OK!</div>
+      </center>
       </div>
-      <div class="start-session">Start session</div>
+    </center>
+      <center>
+        <input type="submit" class="start-session" value="Start Session">
+       <!-- <div class="start-session">Start session</div>-->
+      </center>
+  <P>  </p>
+
+    </center>
     </div>
 
 
     <div id="sub-initiation" class="initiation">
+      <center>
       <div id="sub-clamps-control" class="option">
-        CLAMPS
-        <div id="awaiting-clamps-request" class="awaiting-response">Awaiting partner action...</div>
-        <div id="grant-clamps" class="request-control" style="display:none">Grant control</div>
+        <center>
+        <p><b>Step 1:</b> Give Clamps Control</p>
+        <img src="/clamps.png" class="images"><br/>
+        <div id="awaiting-clamps-request" class="awaiting-response">Waiting for your partner...</div>
+        <div id="grant-clamps" class="request-control" style="display:none">Grant control</div><p>
         <div id="deny-clamps" class="giveup-control" style="display:none">Deny control</div>
         <div id="sub-clamps-negotiated" class="good-to-go" style="display:none">OK!</div>
+      </center>
       </div>
       <div id="sub-video-control" class="option">
-        VIDEO CONTROL
-        <div id="awaiting-video-request" class="awaiting-response">Awaiting partner action...</div>
-        <div id="grant-video" class="request-control" style="display:none">Grant control</div>
+        <center>
+        <p><b>Step 2:</b> Video Control</p>
+        <img src="/blind.png" class="images"><br/>
+        <div id="awaiting-video-request" class="awaiting-response">Waiting for your partner...</div>
+        <div id="grant-video" class="request-control" style="display:none">Grant control</div><p>
         <div id="deny-video" class="giveup-control" style="display:none">Deny control</div>
         <div id="sub-video-negotiated" class="good-to-go" style="display:none">OK!</div>
+        </center>
       </div>
       <div id="sub-audio-control" class="option">
-        AUDIO CONTROL
-        <div id="awaiting-audio-request" class="awaiting-response">Awaiting partner action...</div>
-        <div id="grant-audio" class="request-control" style="display:none">Grant control</div>
+        <center>
+        <p><b>Step 3:</b> Audio Control</p>
+        <img src="/mute.png" class="images"><br/>
+        <div id="awaiting-audio-request" class="awaiting-response">Waiting for your partner...</div>
+        <div id="grant-audio" class="request-control" style="display:none">Grant control</div><p>
         <div id="deny-audio" class="giveup-control" style="display:none">Deny control</div>
         <div id="sub-audio-negotiated" class="good-to-go" style="display:none">OK!</div>
+        </center>
       </div>
-      <div class="start-session">Start session</div>
-
+    </center>
+      <input type="submit" class="start-session" value="Start Session"><br/></br/>
+      <!--<div class="start-session">Start session</div>-->
+    </center>
     </div>
 
     <div id="sub-controls" style="display:none">
@@ -79,6 +110,8 @@
     </div>
     <div id="dom-controls" style="display:none">
     </div>
+
+    
 
     <div id="chatbox">
         <div id="messages">

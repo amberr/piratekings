@@ -1,5 +1,5 @@
 .initiation {
-  position:fixed;
+  
   top:30%;
   left:30%;
   text-align: center;
@@ -9,8 +9,12 @@
 
 .option {
   float:left;
-  padding: 20px;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-bottom: 25px;
+  padding-top: 0px;
   background-color: black;
+  min-height: 370px;
 }
 
 .circle {
@@ -30,19 +34,73 @@
 }
 
 .okay {
-  background-color: green;
+  background-color: #16A084;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-bottom: 25px;
+  padding-top: 0px; 
+  
+
+;
 }
 
 .awaiting-response {
-  background: red;
+  color: red;
+  font-style: italic;
+  
+}
+
+.images{
+  width: 250px;
 }
 
 .start-session {
-  background-color: black;
+  line-height: 50px;
+  vertical-align: top;
+  width: 250px;
+  height: 50px;
+  padding: 0;
+  font-size: 25px;
+  color:white;
+  text-align: center;
+  vertical-align: middle;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  background: #bdc3c7;
+  border: 0;
+  border-bottom: 2px solid #acb2b7;
+  cursor: pointer;
+  -webkit-box-shadow: inset 0 -2px #acb2b7;
+  box-shadow: inset 0 -2px #acb2b7;
+  z-index: 99999;
+  float: center;
+  position: relative;
+  margin-top: 15px;
 }
 
 .start-session-enabled {
-  background-color:#dddddd;
+  position: relative;
+  vertical-align: top;
+  width: 250px;
+  height: 50px;
+  padding: 0;
+  font-size: 25px;
+  color:white;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  background: #27ae60;
+  border: 0;
+  border-bottom: 2px solid #219d55;
+  cursor: pointer;
+  -webkit-box-shadow: inset 0 -2px #219d55;
+  box-shadow: inset 0 -2px #219d55;
+}
+
+
+.start-session-enabled:active {
+  top: 1px;
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 
 html, body {
@@ -103,15 +161,17 @@ font-size: 20px;
 }
 
 #chatbox {
-  right: 20px;
-  bottom: 0px;
+  /*position: relative;
+  right: 0px;
+  bottom: 0px;*/
   z-index: 999;
 }
 
 
 
 #chatinput {
-  background: none repeat scroll 0 0 #F9F9F9;
+  background: none repeat scroll 0 0 #666666;
+  color: white;
   font: 300 18px/40px 'light','Open Sans',Arial,Helvetica,sans-serif;
   height: 40px;
   border-color: white;
@@ -125,10 +185,10 @@ font-size: 20px;
 
 #messages {
   overflow: scroll;
-  background: none repeat scroll 0 0 #F9F9F9;
-
+  background: none repeat scroll 0 0 #666666;
+  color: white;
   font: 300 18px/40px 'light','Open Sans',Arial,Helvetica,sans-serif;
-  height: 300px;
+  height: 20%;
   letter-spacing: 1px;
   margin-bottom: 0px;
   padding: 5px 10px;
@@ -166,6 +226,7 @@ font-size: 20px;
 }
 
 .request-control {
+  line-height: 40px;
   position: relative;
   vertical-align: middle;
   width: 250px;
@@ -195,6 +256,7 @@ font-size: 20px;
   vertical-align: top;
   width: 200px;
   height: 30px;
+  line-height: 30px;
   padding: 0;
   font-size: 15px;
   color:white;
@@ -217,56 +279,6 @@ font-size: 20px;
 
 
 
-.start-inactive {
-  position: relative;
-  vertical-align: top;
-  width: 250px;
-  height: 50px;
-  padding: 0;
-  font-size: 25px;
-  color:white;
-  text-align: center;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-  background: #bdc3c7;
-  border: 0;
-  border-bottom: 2px solid #acb2b7;
-  cursor: pointer;
-  -webkit-box-shadow: inset 0 -2px #acb2b7;
-  box-shadow: inset 0 -2px #acb2b7;
-}
-
-.start-inactive:active {
-  top: 1px;
-  outline: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-
-
-.start-active {
-  position: relative;
-  vertical-align: top;
-  width: 250px;
-  height: 50px;
-  padding: 0;
-  font-size: 25px;
-  color:white;
-  text-align: center;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-  background: #27ae60;
-  border: 0;
-  border-bottom: 2px solid #219d55;
-  cursor: pointer;
-  -webkit-box-shadow: inset 0 -2px #219d55;
-  box-shadow: inset 0 -2px #219d55;
-}
-
-.start-active:active {
-  top: 1px;
-  outline: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
 
 
 
