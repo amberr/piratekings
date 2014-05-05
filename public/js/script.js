@@ -4,6 +4,11 @@ var fb_instance;
 var fb_new_chat_room;
 var fb_instance_users;
 var dom = false;
+var fb_requests;
+var fb_responses;
+var control_clamps;
+var control_video;
+var control_audio;
 
 function getNumPerRow() {
   var len = videos.length;
@@ -189,57 +194,288 @@ function init() {
   if(!hash){
     hash = setHash();
   } else {
-    if(PeerConnection) {
-      rtc.createStream({
-        "video": {"mandatory": {}, "optional": []},
-        "audio": true
-      }, function(stream) {
-        document.getElementById('you').src = URL.createObjectURL(stream);
-        document.getElementById('you').play();
-        //videos.push(document.getElementById('you'));
-        //rtc.attachStream(stream, 'you');
-        //subdivideVideos();
-      });
-    } else {
-      alert('Your browser is not supported or you have to turn on flags. In chrome you go to chrome://flags and turn on Enable PeerConnection remember to restart chrome');
-    }
-      /* Connect to Firebase */
+    /* Connect to Firebase */
     fb_instance = new Firebase("https://dynamixxx.firebaseio.com");
     fb_new_chat_room = fb_instance.child('chatrooms').child(hash);
     fb_instance_users = fb_new_chat_room.child('users');
     fb_instance_users.once('value', function(snapshot) { 
       var num_users = snapshot.numChildren();
-      if(num_users > 2) {
-        // quit the app
-      } else if (num_users == 0) {
-        dom = true;
+      if(num_users > 1) {
+        alert("There are already two users in this chat. Redirecting to new chat...")
+        setHash();
+      } else {
+        if (num_users == 0) {
+          dom = true;
+        }
+        fb_requests = fb_new_chat_room.child('permissions').child('requests');
+        fb_responses = fb_new_chat_room.child('permissions').child('responses');
+        
+        /* Prompt name and add user to chat */
+        var username = window.prompt(dom? "What will your partner call you?": "What would you like to be called?");
+        if(!username){
+          username = "anonymous"+Math.floor(Math.random()*1111);
+        }
+        // TODO: check if username already exists in chat, prompt again if so
+        fb_instance_users.push({ name: username });
+        var initiation_div = (dom? "dom-initiation": "sub-initiation");
+        document.getElementById(initiation_div).style.display="block";
+
+             /* This part initiates the request to access camera/mic, should wait until after initiation to do so */
+        if(PeerConnection) {
+          rtc.createStream({
+            "video": {"mandatory": {}, "optional": []},
+            "audio": true
+          }, function(stream) {
+            document.getElementById('you').src = URL.createObjectURL(stream);
+            document.getElementById('you').play();
+            //videos.push(document.getElementById('you'));
+            //rtc.attachStream(stream, 'you');
+            //subdivideVideos();
+          });
+        } else {
+          alert('Your browser is not supported or you have to turn on flags. In chrome you go to chrome://flags and turn on Enable PeerConnection remember to restart chrome');
+        }
+
+
       }
-          /* Prompt name and add user to chat */
-      var username = window.prompt(dom? "What will your partner call you?": "What would you like to be called?");
-      if(!username){
-        username = "anonymous"+Math.floor(Math.random()*1111);
+
+      /* Set up RTC */
+      var room = window.location.hash.slice(1);
+      rtc.connect("ws:" + window.location.href.substring(window.location.protocol.length).split('#')[0], room);
+      rtc.on('add remote stream', function(stream, socketId) {
+        console.log("ADDING REMOTE STREAM...");
+        var clone = cloneVideo('you', socketId);
+        document.getElementById(clone.id).setAttribute("class", "");
+        rtc.attachStream(stream, clone.id);
+        subdivideVideos();
+      });
+      rtc.on('disconnect stream', function(data) {
+        console.log('remove ' + data);
+        removeVideo(data);
+      });
+      // initFullScreen();
+      // initNewRoom();
+      initChat();
+      dom? initDomInitiation(): initSubInitiation();
+      // startChat();
+
+    });
+  }
+}
+
+function checkAllNegotiated(num_negotiated) {
+  console.log(num_negotiated);
+  if(num_negotiated == 3) {
+    $(".start-session").addClass("start-session-enabled");
+    $(".start-session").click(startChat);
+  }
+}
+
+// on okays, need to add class to the outer option div so it will turn green
+// on all three okayed, need to add class to start session that allows for it to be clickable
+// need to add some more text so it's clear to each partner what's been agreed upon
+// should add ability to reset negotiations
+
+function initDomInitiation() {
+  var num_negotiated = 0;
+
+    fb_responses.on("child_added",function(snapshot){
+      var option = snapshot.val()['option'];
+      var status = snapshot.val()['status'];
+
+      if(option == 'clamps') {
+        if (status == 'granted') {
+          $("#awaiting-clamps-permission").hide();
+          $("#dom-clamps-negotiated").show();
+          $("#clamps-control").addClass("okay");
+          control_clamps = true;
+          checkAllNegotiated(++num_negotiated);
+        } else {
+          $("#request-clamps").show();
+          $("#giveup-clamps").show();
+          $("#awaiting-clamps-permission").hide();
+          $("#clamps-permission-denied").show();
+        }
+      } else if (option == 'video') {
+        if (status == 'granted') {
+          $("#awaiting-video-permission").hide();
+          $("#dom-video-negotiated").show();
+          $("#video-control").addClass("okay");
+          control_video = true;
+          checkAllNegotiated(++num_negotiated);
+        } else {
+          $("#request-video").show();
+          $("#giveup-video").show();
+          $("#awaiting-video-permission").hide();
+          $("#video-permission-denied").show();
+        }
+      } else if (option == 'audio') {
+        if (status == 'granted') {
+          $("#awaiting-audio-permission").hide();
+          $("#dom-audio-negotiated").show();
+          $("#audio-control").addClass("okay");
+          control_audio = true;
+          checkAllNegotiated(++num_negotiated);
+        } else {
+          $("#awaiting-audio-permission").hide();
+          $("#request-audio").show();
+          $("#giveup-audio").show();
+          $("#audio-permission-denied").show();
+        }
       }
-      fb_instance_users.push({ name: username });
     });
 
-    /* Set up RTC */
-    var room = window.location.hash.slice(1);
-    rtc.connect("ws:" + window.location.href.substring(window.location.protocol.length).split('#')[0], room);
-    rtc.on('add remote stream', function(stream, socketId) {
-      console.log("ADDING REMOTE STREAM...");
-      var clone = cloneVideo('you', socketId);
-      document.getElementById(clone.id).setAttribute("class", "");
-      rtc.attachStream(stream, clone.id);
-      subdivideVideos();
+  $("#request-clamps").click(function() {
+    $("#request-clamps").hide();
+    $("#giveup-clamps").hide();
+    $("#awaiting-clamps-permission").show();
+    $("#clamps-permission-denied").hide();
+    fb_requests.push({'option': 'clamps', 'status': 'requested'});
+  });
+  $("#giveup-clamps").click(function() {
+    $("#request-clamps").hide();
+    $("#giveup-clamps").hide();
+    $("#dom-clamps-negotiated").show();
+    $("#clamps-control").addClass("okay");
+    control_clamps = false;
+    checkAllNegotiated(++num_negotiated);
+    $("#clamps-permission-denied").hide();
+    fb_requests.push({'option': 'clamps', 'status': 'given up'});
+  });
+  $("#request-video").click(function() {
+    $("#request-video").hide();
+    $("#giveup-video").hide();
+    $("#awaiting-video-permission").show();
+    $("#video-permission-denied").hide();
+    fb_requests.push({'option': 'video', 'status': 'requested'});
+  });
+  $("#giveup-video").click(function() {
+    $("#request-video").hide();
+    $("#giveup-video").hide();
+    $("#dom-video-negotiated").show();
+    control_video = false;
+    checkAllNegotiated(++num_negotiated);
+    $("#video-control").addClass("okay");
+    $("#video-permission-denied").hide();
+    fb_requests.push({'option': 'video', 'status': 'given up'});
+  });
+  $("#request-audio").click(function() {
+    $("#request-audio").hide();
+    $("#giveup-audio").hide();
+    $("#awaiting-audio-permission").show();
+    $("#audio-permission-denied").hide();
+    fb_requests.push({'option': 'audio', 'status': 'requested'});
+  });
+  $("#giveup-audio").click(function() {
+    $("#request-audio").hide();
+    $("#giveup-audio").hide();
+    $("#dom-audio-negotiated").show();
+    $("#audio-control").addClass("okay");
+    control_audio - false;
+    checkAllNegotiated(++num_negotiated);
+    $("#audio-permission-denied").hide();
+    fb_requests.push({'option': 'audio', 'status': 'given up'});
+  });
+}
+
+function initSubInitiation() {
+    var num_negotiated = 0;
+
+    fb_requests.on("child_added",function(snapshot){
+      var option = snapshot.val()['option'];
+      var status = snapshot.val()['status'];
+
+      if(option == 'clamps') {
+        if (status == 'requested') {
+          $("#grant-clamps").show();
+          $("#deny-clamps").show();
+          $("#awaiting-clamps-request").hide();
+        } else {
+          $("#awaiting-clamps-request").hide();
+          $("#sub-clamps-negotiated").show();
+          $("#sub-clamps-control").addClass("okay");
+          checkAllNegotiated(++num_negotiated);
+        }
+      } else if (option == 'video') {
+        if (status == 'requested') {
+          $("#grant-video").show();
+          $("#deny-video").show();
+          $("#awaiting-video-request").hide();
+        } else {
+          $("#awaiting-video-request").hide();
+          $("#sub-video-negotiated").show();
+          $("#sub-video-control").addClass("okay");
+          checkAllNegotiated(++num_negotiated);
+        }
+      } else if (option == 'audio') {
+        if (status == 'requested') {
+          $("#grant-audio").show();
+          $("#deny-audio").show();
+          $("#awaiting-audio-request").hide();
+        } else {
+          $("#awaiting-audio-request").hide();
+          $("#sub-audio-negotiated").show();
+          $("#sub-audio-control").addClass("okay");
+          checkAllNegotiated(++num_negotiated);
+        }
+      }
     });
-    rtc.on('disconnect stream', function(data) {
-      console.log('remove ' + data);
-      removeVideo(data);
-    });
-    initFullScreen();
-    initNewRoom();
-    initChat();
-  }
+
+  $("#grant-clamps").click(function() {
+    fb_responses.push({'option': 'clamps', 'status': 'granted'});
+    $("#grant-clamps").hide();
+    $("#deny-clamps").hide();
+    $("#sub-clamps-negotiated").show();
+    $("#sub-clamps-control").addClass("okay");
+    checkAllNegotiated(++num_negotiated);
+    console.log("clamps granted");
+  });
+  $("#deny-clamps").click(function() {
+    fb_responses.push({'option': 'clamps', 'status': 'denied'});
+    $("#grant-clamps").hide();
+    $("#deny-clamps").hide();
+    $("#awaiting-clamps-request").show();
+    console.log("clamps denied");
+  });
+  $("#grant-video").click(function() {
+    fb_responses.push({'option': 'video', 'status': 'granted'});
+    $("#grant-video").hide();
+    $("#deny-video").hide();
+    $("#sub-video-negotiated").show();
+    $("#sub-video-control").addClass("okay");
+    checkAllNegotiated(++num_negotiated);
+    console.log("video granted");
+  });
+  $("#deny-video").click(function() {
+    fb_responses.push({'option': 'video', 'status': 'denied'});
+    $("#grant-video").hide();
+    $("#deny-video").hide();
+    $("#awaiting-video-request").show();
+    console.log("video denied");
+  });
+  $("#grant-audio").click(function() {
+    fb_responses.push({'option': 'audio', 'status': 'granted'});
+    $("#grant-audio").hide();
+    $("#deny-audio").hide();
+    $("#sub-audio-negotiated").show();
+    $("#sub-audio-control").addClass("okay");
+    checkAllNegotiated(++num_negotiated);
+    console.log("audio granted");
+  });
+  $("#deny-audio").click(function() {
+    fb_responses.push({'option': 'audio', 'status': 'denied'});
+    $("#grant-audio").hide();
+    $("#deny-audio").hide();
+    $("#awaiting-audio-request").show();
+    console.log("audio denied");
+  });
+}
+
+function startChat() {
+  $(".initiation").remove();
+  console.log($(".initiation"));
+  var videos = document.getElementById("videos");
+  videos.style.display = "block";
 }
 
 window.onresize = function(event) {

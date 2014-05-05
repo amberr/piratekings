@@ -2,26 +2,64 @@
   <head>
     <title>Dynamixx</title>
     <link type="text/css" href="/style.css" rel="stylesheet"></link>
-
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="/webrtc.io.js"></script>
     <script src='https://cdn.firebase.com/js/client/1.0.6/firebase.js'></script>
   </head>
   <body onload="init()">
 
-    <div id="initiation">
-      <div id="clamps">
+    <div id="dom-initiation" class="initiation">
+      <div id="clamps-control" class="option">
+        CLAMPS
         <div id="request-clamps" class="request-control">Request control</div>
         <div id="giveup-clamps" class="giveup-control">Give up control</div>
+        <div id="awaiting-clamps-permission" class="awaiting-response" style="display:none">Request sent</div>
+        <div id="clamps-permission-denied" class="request-denied" style="display:none">Request denied</div>
+        <div id="dom-clamps-negotiated" class="good-to-go" style="display:none">OK!</div>
       </div>
-      <div id="video-control">
+      <div id="video-control" class="option">
+        VIDEO CONTROL
         <div id="request-video" class="request-control">Request control</div>
         <div id="giveup-video" class="giveup-control">Give up control</div>
+        <div id="awaiting-video-permission" class="awaiting-response" style="display:none">Request sent</div>
+        <div id="video-permission-denied" class="request-denied" style="display:none">Request denied</div>
+        <div id="dom-video-negotiated" class="good-to-go" style="display:none">OK!</div>
       </div>
-      <div id="audio-control">
+      <div id="audio-control" class="option">
+        AUDIO CONTROL
         <div id="request-audio" class="request-control">Request control</div>
         <div id="giveup-audio" class="giveup-control">Give up control</div>
+        <div id="awaiting-audio-permission" class="awaiting-response" style="display:none">Request sent</div>
+        <div id="audio-permission-denied" class="request-denied" style="display:none">Request denied</div>
+        <div id="dom-audio-negotiated" class="good-to-go" style="display:none">OK!</div>
       </div>
-      <div id="start-session">Start Session</div>
+      <div class="start-session">Start session</div>
+    </div>
+
+
+    <div id="sub-initiation" class="initiation">
+      <div id="sub-clamps-control" class="option">
+        CLAMPS
+        <div id="awaiting-clamps-request" class="awaiting-response">Awaiting partner action...</div>
+        <div id="grant-clamps" class="request-control" style="display:none">Grant control</div>
+        <div id="deny-clamps" class="giveup-control" style="display:none">Deny control</div>
+        <div id="sub-clamps-negotiated" class="good-to-go" style="display:none">OK!</div>
+      </div>
+      <div id="sub-video-control" class="option">
+        VIDEO CONTROL
+        <div id="awaiting-video-request" class="awaiting-response">Awaiting partner action...</div>
+        <div id="grant-video" class="request-control" style="display:none">Grant control</div>
+        <div id="deny-video" class="giveup-control" style="display:none">Deny control</div>
+        <div id="sub-video-negotiated" class="good-to-go" style="display:none">OK!</div>
+      </div>
+      <div id="sub-audio-control" class="option">
+        AUDIO CONTROL
+        <div id="awaiting-audio-request" class="awaiting-response">Awaiting partner action...</div>
+        <div id="grant-audio" class="request-control" style="display:none">Grant control</div>
+        <div id="deny-audio" class="giveup-control" style="display:none">Deny control</div>
+        <div id="sub-audio-negotiated" class="good-to-go" style="display:none">OK!</div>
+      </div>
+      <div class="start-session">Start session</div>
     </div>
 
     <div id="videos">
@@ -31,12 +69,7 @@
       <div id="hideShowMessages" class="button">toggle chat</div>
       <div id="messages">
       </div>
-      <input id="chatinput" type="text" placeholder="Message:"/>
-    </div>
-
-    <div class="buttonBox">
-      <div id="fullscreen" class="button">Enter Full Screen</div>
-      <div id="newRoom" class="button">Create A New Room</div>
+      <input id="chatinput" type="text" placeholder="Type your message here"/>
     </div>
     
     <script src="/script.js"></script>
