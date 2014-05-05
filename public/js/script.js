@@ -10,6 +10,8 @@ var control_clamps;
 var control_video;
 var control_audio;
 var clamps_on = false;
+var me;
+var partner;
 
 function getNumPerRow() {
   var len = videos.length;
@@ -68,11 +70,11 @@ function removeVideo(socketId) {
   }
 }
 
-function addToChat(msg, color) {
+function addToChat(msg, user, color) {
   var messages = document.getElementById('messages');
   msg = sanitize(msg);
   if(color) {
-    msg = '<span style="color: ' + color + '; padding-left: 15px">' + msg + '</span>';
+    msg = '<span style="color: ' + color + '; padding-left: 15px">' + user + ': ' + msg + '</span>';
   } else {
     msg = '<strong style="padding-left: 15px">' + msg + '</strong>';
   }
@@ -151,21 +153,8 @@ function initChat() {
   }
 
   var input = document.getElementById("chatinput");
-  // var toggleHideShow = document.getElementById("hideShowMessages");
   var room = window.location.hash.slice(1);
   var color = "#" + ((1 << 24) * Math.random() | 0).toString(16);
-
-  // toggleHideShow.addEventListener('click', function() {
-  //   var element = document.getElementById("messages");
-
-  //   if(element.style.display === "block") {
-  //     element.style.display = "none";
-  //   }
-  //   else {
-  //     element.style.display = "block";
-  //   }
-
-  // });
 
   input.addEventListener('keydown', function(event) {
     var key = event.which || event.keyCode;
@@ -178,14 +167,13 @@ function initChat() {
           "color": color
         }
       }));
-      addToChat(input.value);
+      addToChat(input.value, me, color);
       input.value = "";
     }
   }, false);
   rtc.on(chat.event, function() {
     var data = chat.recv.apply(this, arguments);
-    console.log(data.color);
-    addToChat(data.messages, data.color.toString(16));
+    addToChat(data.messages, partner, data.color.toString(16));
   });
 }
 
@@ -222,6 +210,14 @@ function init() {
         if(!username){
           username = "anonymous"+Math.floor(Math.random()*1111);
         }
+        me = username;
+
+        fb_instance_users.on("child_added", function(snapshot) {
+          if(snapshot.val()['name'] != me) {
+            partner = snapshot.val()['name'];
+          }
+        });
+
         // TODO: check if username already exists in chat, prompt again if so
         fb_instance_users.push({ name: username });
         var initiation_div = (dom? "dom-initiation": "sub-initiation");
@@ -236,15 +232,10 @@ function init() {
           }, function(stream) {
             document.getElementById('you').src = URL.createObjectURL(stream);
             document.getElementById('you').play();
-            //videos.push(document.getElementById('you'));
-            //rtc.attachStream(stream, 'you');
-            //subdivideVideos();
           });
         } else {
           alert('Your browser is not supported or you have to turn on flags. In chrome you go to chrome://flags and turn on Enable PeerConnection remember to restart chrome');
         }
-
-
       }
 
       /* Set up RTC */
@@ -271,7 +262,7 @@ function init() {
 function checkAllNegotiated(num_negotiated) {
   console.log(num_negotiated);
   if(num_negotiated == 3) {
-    $(".start-session").addClass("start-session-enabled");
+    $(".start-session").add("start-session-enabled");
     $(".start-session").click(startChat);
   }
 }
