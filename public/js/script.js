@@ -148,21 +148,21 @@ function initChat() {
   }
 
   var input = document.getElementById("chatinput");
-  var toggleHideShow = document.getElementById("hideShowMessages");
+  // var toggleHideShow = document.getElementById("hideShowMessages");
   var room = window.location.hash.slice(1);
   var color = "#" + ((1 << 24) * Math.random() | 0).toString(16);
 
-  toggleHideShow.addEventListener('click', function() {
-    var element = document.getElementById("messages");
+  // toggleHideShow.addEventListener('click', function() {
+  //   var element = document.getElementById("messages");
 
-    if(element.style.display === "block") {
-      element.style.display = "none";
-    }
-    else {
-      element.style.display = "block";
-    }
+  //   if(element.style.display === "block") {
+  //     element.style.display = "none";
+  //   }
+  //   else {
+  //     element.style.display = "block";
+  //   }
 
-  });
+  // });
 
   input.addEventListener('keydown', function(event) {
     var key = event.which || event.keyCode;
@@ -189,6 +189,7 @@ function initChat() {
 
 function init() {
   /* Generate new chat hash if needed */
+  $("#videos").hide();
   var url_segments = document.location.href.split("#");
   var hash = url_segments[1];
   if(!hash){
@@ -206,6 +207,9 @@ function init() {
       } else {
         if (num_users == 0) {
           dom = true;
+          $("#dom-status").show();
+        } else {
+          $("#sub-status").show();
         }
         fb_requests = fb_new_chat_room.child('permissions').child('requests');
         fb_responses = fb_new_chat_room.child('permissions').child('responses');
@@ -473,9 +477,7 @@ function initSubInitiation() {
 
 function startChat() {
   $(".initiation").remove();
-  console.log($(".initiation"));
-  var videos = document.getElementById("videos");
-  videos.style.display = "block";
+  $("#videos").show();
 }
 
 window.onresize = function(event) {

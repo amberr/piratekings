@@ -14,7 +14,8 @@
 
     <div id="headertitle">
         <span id="title">DYNAMIXX</span>
-        <span id="status">You are <b>DOMINANT</b></span>
+        <span id="dom-status" class="status" style="display:none">You are a <b>DOM</b></span>
+        <span id="sub-status" class="status" style="display:none">You are a <b>SUB</b></span>
     </div>
 
     <div id="dom-initiation" class="initiation">
@@ -70,28 +71,25 @@
       </div>
       <div class="start-session">Start session</div>
 
-      <div id="chatbox">
-          <div id="messages">
-          </div>
-          <input id="chatinput" type="text" placeholder="Type your message here..."/>
-        </div>
-
-
-      <div id="play">
-        <div id="videos">
-          <video id="you" class="flip" autoplay width="263" height="200" style="position: absolute; left: 0px; bottom: 0px;"></video>
-        </div>
-
-
     </div>
 
-   <!-- <div class="buttonBox">
-      <div id="fullscreen" class="button">Enter Full Screen</div>
-      <div id="newRoom" class="button">Create A New Room</div>
->>>>>>> ef940660a3a119f15068b63048ad3a8e914e9a06
+    <div id="sub-controls" style="display:none">
+      <div id="slow" class="circle">SLOW</div>
+      <div id="stop" class="circle">STOP</div>
     </div>
-    -->
-</div>
+    <div id="dom-controls" style="display:none">
+    </div>
+
+    <div id="chatbox">
+        <div id="messages">
+        </div>
+        <input id="chatinput" type="text" placeholder="Type your message here..."/>
+    </div>
+
+    <div id="videos">
+        <video id="you" class="flip" autoplay width="263" height="200" style="position: absolute; left: 0px; bottom: 0px;"></video>
+    </div>
+
     <script src="/script.js"></script>
   </body>
 </html>

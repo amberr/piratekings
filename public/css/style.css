@@ -10,14 +10,35 @@
 .option {
   float:left;
   padding: 20px;
+  background-color: black;
+}
+
+.circle {
+  border-radius: 50%;
+  width: 200px;
+  height: 200px; 
+  text-align: center;
+  vertical-align: middle;
+}
+
+#slow {
+  background-color: yellow;
+}
+
+#stop {
+  background-color: red;
 }
 
 .okay {
   background-color: green;
 }
 
+.awaiting-response {
+  background: red;
+}
+
 .start-session {
-  background-color:#ffffff;
+  background-color: black;
 }
 
 .start-session-enabled {
@@ -62,7 +83,7 @@ body {
   vertical-align: middle;
 }
 
-#status{
+.status{
 
 position: relative;
 float: right;
@@ -73,7 +94,6 @@ font-size: 20px;
 }
 
 #videos {
-  display: none;
   position: absolute;
   top: 0px;
   left: 0px;
@@ -143,10 +163,6 @@ font-size: 20px;
   text-align: center;
   z-index: 99;
 
-}
-
-#play{
-  visibility: hidden;
 }
 
 .request-control {
