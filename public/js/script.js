@@ -9,6 +9,7 @@ var fb_responses;
 var control_clamps;
 var control_video;
 var control_audio;
+var clamps_on = false;
 
 function getNumPerRow() {
   var len = videos.length;
@@ -48,6 +49,8 @@ function setWH(video, i) {
   video.style.top = Math.floor(i / perRow) * height + "px";
 }
 
+
+/* Video cloned from the end of the socket gets added here */
 function cloneVideo(domId, socketId) {
   var video = document.getElementById(domId);
   var clone = video.cloneNode(false);
@@ -224,7 +227,8 @@ function init() {
         var initiation_div = (dom? "dom-initiation": "sub-initiation");
         document.getElementById(initiation_div).style.display="block";
 
-             /* This part initiates the request to access camera/mic, should wait until after initiation to do so */
+        /* This part initiates the request to access camera/mic, should wait until after initiation to do so 
+            (not doing this right now because chat is routed through the same socket */
         if(PeerConnection) {
           rtc.createStream({
             "video": {"mandatory": {}, "optional": []},
@@ -249,7 +253,7 @@ function init() {
       rtc.on('add remote stream', function(stream, socketId) {
         console.log("ADDING REMOTE STREAM...");
         var clone = cloneVideo('you', socketId);
-        document.getElementById(clone.id).setAttribute("class", "");
+        document.getElementById(clone.id).setAttribute("class", "partner-video");
         rtc.attachStream(stream, clone.id);
         subdivideVideos();
       });
@@ -257,11 +261,8 @@ function init() {
         console.log('remove ' + data);
         removeVideo(data);
       });
-      // initFullScreen();
-      // initNewRoom();
       initChat();
       dom? initDomInitiation(): initSubInitiation();
-      // startChat();
 
     });
   }
@@ -475,9 +476,81 @@ function initSubInitiation() {
   });
 }
 
+
+/* Unhide video and show/activate the appropriate controls */
 function startChat() {
-  $(".initiation").remove();
-  $("#videos").show();
+  $(".initiation").remove(); // take away the initiation elements
+  $("#videos").show(); // show the videos
+
+  var fb_commands = fb_new_chat_room.child('commands');
+  var fb_warnings = fb_new_chat_room.child('warnings');
+
+  // if(dom) {
+  //   $("#dom-controls").show();
+  //   if (control_audio) {
+  //     $("#gag").onclick(function() {
+  //       fb_commands.push({'command': 'gag'});
+  //       // send signal to their end to turn off their audio, show them that this has happened
+  //     });
+  //   } else {
+  //     $("#gag").hide();
+  //   }
+
+  //   if (control_video) {
+  //     $("#blindfold").onclick(function() {
+  //       fb_commands.push({'command': 'blindfold'});
+  //       // just turn off my video, but send them a signal to show them that this has happened
+  //     });
+  //   } else {
+  //     $("#blindfold").hide();
+  //   }
+
+  //   if (control_clamps) {
+  //     $("#clamp").onclick(function() {
+  //       clamps_on = !clamps_on;
+  //       fb_commands.push({'command': 'clamp'});
+  //       // toggle clamps on, send signal to clamps to toggle on/off, and send signal to them to show that this has happened
+  //     });
+  //   } else {
+  //     $("#clamp").hide();
+  //   }
+
+  //   // Listen for signals from sub
+  //   fb_warnings.on("child_added",function(snapshot){
+  //     var warning = snapshot.val()['warning'];
+  //     if (warning == 'slow') {
+  //       // show slow signal
+  //     } else {
+  //       // hide video and dom controls, show stop signal
+  //     }
+  //   }
+
+  // } else {
+  //   $("#sub-controls").show();
+  //   $("#slow").onclick(function() {
+  //     fb_warnings.push({'warning': 'slow'});
+  //     // send signal to dom to SLOW
+  //   });
+  //   $("#stop").onclick(function() {
+  //     fb_warnings.push({'warning': 'stop'});
+  //     // send signal to dom to STOP
+  //     // hide videos and turn off controls
+  //   });
+
+  //   // Listen for dom's signals
+  //   fb_commands.on("child_added",function(snapshot){
+  //     var command = snapshot.val()['command'];
+  //     if (command == 'gag') {
+
+  //     } else if (command == 'blindfold') {
+
+  //     } else if (command == 'clamp') {
+
+  //     }
+  //   }
+  // }
+
+
 }
 
 window.onresize = function(event) {
