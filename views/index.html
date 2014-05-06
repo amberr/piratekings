@@ -14,10 +14,11 @@
 
     <div id="headertitle">
         <span id="title">DYNAMIXX</span>
-        <span id="restart" style="display:none">Back to negotiation</span>
-        <span id="aftercare" style="display:none">Initiate aftercare</span>
         <span id="dom-status" class="status" style="display:none">You are a <b>DOM</b></span>
         <span id="sub-status" class="status" style="display:none">You are a <b>SUB</b></span>
+        <input type="submit" id="aftercare" value="Initiate aftercare" style="display:none">
+        <input type="submit" id="restart" value="Back" style="display:none">
+        
     </div>
     <p></p>
     <div id="dom-initiation" class="initiation">
@@ -106,9 +107,14 @@
     </center>
     </div>
 
-    <div id="sub-controls" style="display:none">
-      <div id="slow" class="circle">SLOW</div>
-      <div id="stop" class="circle">STOP</div>
+    
+
+
+
+    <div id="videos">
+        <div id="you-overlay" class="overlay">
+          <video id="you" class="flip" autoplay width="263" height="200" style="position: absolute; left: 0px; bottom: 0px;"></video>
+        </div>
     </div>
 
     <div id="dom-controls" style="display:none">
@@ -133,17 +139,18 @@
     <div id="gagged" style="display:none">You've been gagged.</div>
     <div id="blindfolded" style="display:none">You've been blindfolded.</div>
 
+    <div id="sub-controls" style="display:none">
+      <div id="slow" class="circle">SLOW</div>
+      <div id="stop" class="circle">STOP</div>
+    </div>
+
     <div id="chatbox">
         <div id="messages">
         </div>
         <input id="chatinput" type="text" placeholder="Type your message here..."/>
     </div>
 
-    <div id="videos">
-        <div id="you-overlay" class="overlay">
-          <video id="you" class="flip" autoplay width="263" height="200" style="position: absolute; left: 0px; bottom: 0px;"></video>
-        </div>
-    </div>
+    
 
     <script src="/script.js"></script>
   </body>
