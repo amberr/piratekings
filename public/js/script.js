@@ -43,13 +43,13 @@ function getNumPerRow() {
 }
 
 function subdivideVideos() {
-  var perRow = getNumPerRow();
-  var numInRow = 0;
-  for(var i = 0, len = videos.length; i < len; i++) {
-    var video = videos[i];
-    setWH(video, i);
-    numInRow = (numInRow + 1) % perRow;
-  }
+  // var perRow = getNumPerRow();
+  // var numInRow = 0;
+  // for(var i = 0, len = videos.length; i < len; i++) {
+  //   var video = videos[i];
+  //   setWH(video, i);
+  //   numInRow = (numInRow + 1) % perRow;
+  // }
 }
 
 function setWH(video, i) {
