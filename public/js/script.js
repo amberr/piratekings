@@ -16,6 +16,7 @@ var clamps_on = false;
 var gagged = false;
 var blindfolded = false;
 var num_negotiated = 0;
+var restarted = false;
 
 function getNumPerRow() {
   var len = videos.length;
@@ -292,7 +293,11 @@ function init() {
 function checkAllNegotiated(num_negotiated) {
   if(num_negotiated == 3) {
     $(".start-session").addClass("start-session-enabled");
-    $(".start-session").click(startChat);
+    $(".start-session").click(function() {
+      if ($("#start-session").hasClass('start-session-enabled')) {
+        startChat();
+      }
+    });
   }
 }
 
@@ -402,7 +407,7 @@ function initDomInitiation() {
 }
 
 function initSubInitiation() {
-    var num_negotiated = 0;
+    num_negotiated = 0;
 
     fb_requests.on("child_added",function(snapshot){
       var option = snapshot.val()['option'];
@@ -496,62 +501,72 @@ function initSubInitiation() {
 
 function initRestart() {
   $('#restart').show();
-  var fb_restart = fb_new_chat_room.child('restart');
-  // $('#restart').click(function() {
-  //   fb_restart.push({'restart': true});
-  // });
+  
+  if(!restarted) {
+    var fb_restart = fb_new_chat_room.child('restart');
+    $('#restart').click(function() {
+      fb_restart.push({'restart': true});
+    });
 
-  fb_restart.on('child_added', function(snapshot) {
-    $('#videos').hide();
-    $('#sub-controls').hide();
-    $('#dom-controls').hide();
-    $('#terminated').hide();
-    $('#terminated-sent').hide();
-    $('#warning').hide();
-    $('#warning-sent').hide();
-    $('#gagged').hide();
-    $('#blindfolded').hide();
-    $('#restart').hide();
-    if (dom) {
-      $('#dom-initiation').show();
-      $('#request-clamps').show();
-      $('#giveup-clamps').show();
-      $('#request-video').show();
-      $('#giveup-video').show();
-      $('#request-audio').show();
-      $('#giveup-audio').show();
-    } else {
-      $('#sub-initiation').show();
-      $("#awaiting-clamps-request").show();
-      $("#awaiting-video-request").show();
-      $("#awaiting-audio-request").show();
-    }
-    $('.good-to-go').hide();
-    $('.option').removeClass('okay');
-    $('#start-session').removeClass('start-session-enabled');
+    fb_restart.on('child_added', function(snapshot) {
+      $('#videos').hide();
+      $('#sub-controls').hide();
+      $('#dom-controls').hide();
+      $('#terminated').hide();
+      $('#terminated-sent').hide();
+      $('#warning').hide();
+      $('#warning-sent').hide();
+      $('#gagged').hide();
+      $('#blindfolded').hide();
+      $('#restart').hide();
+      if (dom) {
+        $('#dom-initiation').show();
+        $('#request-clamps').show();
+        $('#giveup-clamps').show();
+        $('#request-video').show();
+        $('#giveup-video').show();
+        $('#request-audio').show();
+        $('#giveup-audio').show();
+      } else {
+        $('#sub-initiation').show();
+        $("#awaiting-clamps-request").show();
+        $("#awaiting-video-request").show();
+        $("#awaiting-audio-request").show();
+      }
+      $('.good-to-go').hide();
+      $('.option').removeClass('okay');
+      $('.start-session').removeClass('start-session-enabled');
 
-    toggleAudioMute('#them');
-    toggleAudioMute('#you');
-    // take away start session class and functionality
+      $('#them').prop('muted', false);
+      $('#you').prop('muted', false);
 
-    // remove classes from blindfold and gag and set their text back to what it should be
+      $('#blindfold').text('blindfold');
+      $('#blindfold').removeClass('blindfold-active');
 
-    clamps_on = false;
-    gagged = false;
-    blindfolded = false;
-    num_negotiated = 0;
+      $('#gag').text('gag');
+      $('#gag').removeClass('gag-active');
 
-    // TODO: turn clamps off!
+      clamps_on = false;
+      gagged = false;
+      blindfolded = false;
+      control_video = false;
+      control_audio = false;
+      control_clamps = false;
+      num_negotiated = 0;
 
-  });
+      // TODO: turn clamps off!
 
+    });
+  }
+  restarted = true;
 }
 
 
 /* Unhide video and show/activate the appropriate controls */
 function startChat() {
-  $(".initiation").hide(); // take away the initiation elements
-  $("#videos").show(); // show the videos
+  // $(".initiation").hide(); // take away the initiation elements
+  $(".initiation").css('display', 'none');
+  $("#videos").css('display', 'block');
 
   initRestart();
 
@@ -567,6 +582,7 @@ function startChat() {
       $("#gag").click(function() {
         fb_commands.push({'command': 'gag'});
         toggleAudioMute('#them');
+        console.log('gaggggeeee');
         if (gagged) {
           $('#gag').text('gag');
           $('#gag').removeClass('gag-active');
