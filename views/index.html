@@ -14,6 +14,7 @@
 
     <div id="headertitle">
         <span id="title">DYNAMIXX</span>
+        <span id="restart" style="display:none">Back to negotiation</span>
         <span id="dom-status" class="status" style="display:none">You are a <b>DOM</b></span>
         <span id="sub-status" class="status" style="display:none">You are a <b>SUB</b></span>
     </div>
@@ -112,16 +113,24 @@
     <div id="dom-controls" style="display:none">
       <div id="gag">gag</div>
       <div id="blindfold">blindfold</div>
-      <div id="clamp" class="onoffswitch">Clamp
+      <div id="clamp" class="onoffswitch">
+        Clamps:
         <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
         <label class="onoffswitch-label" for="myonoffswitch">
             <div class="onoffswitch-inner"></div>
             <div class="onoffswitch-switch"></div>
         </label>
-      </div>
+    </div>
     </div>
 
-    
+    <div id="terminated" style="display:none">This scene has been terminated by the sub.</div>
+    <div id="terminated-sent" style="display:none">You have terminated the scene.</div>
+
+    <div id="warning" style="display:none">Your partner has sent a warning signal. <b>Take it down a notch.</b></div>
+    <div id="warning-sent" style="display:none">A warning signal has been sent to your partner.</div>
+
+    <div id="gagged" style="display:none">You've been gagged.</div>
+    <div id="blindfolded" style="display:none">You've been blindfolded.</div>
 
     <div id="chatbox">
         <div id="messages">

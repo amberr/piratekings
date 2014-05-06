@@ -3,15 +3,19 @@ var PeerConnection = window.PeerConnection || window.webkitPeerConnection00 || w
 var fb_instance;
 var fb_new_chat_room;
 var fb_instance_users;
-var dom = false;
-var fb_requests;
-var fb_responses;
-var control_clamps;
-var control_video;
-var control_audio;
-var clamps_on = false;
+var fb_requests; // requests from the dom during initiation
+var fb_responses; // responses from the sub during intiation
+var control_clamps; // does dom have the ability to control clamps?
+var control_video; // does dom have the ability to control video?
+var control_audio; // does dom have the ability to control audio?
 var me;
 var partner;
+
+var dom = false;
+var clamps_on = false;
+var gagged = false;
+var blindfolded = false;
+var num_negotiated = 0;
 
 function getNumPerRow() {
   var len = videos.length;
@@ -63,6 +67,7 @@ function cloneVideo(domId, socketId) {
   div.appendChild(clone);
   document.getElementById('videos').appendChild(div);
   videos.push(clone);
+  console.log(clone);
   return clone;
 }
 
@@ -264,7 +269,7 @@ function init() {
 
       /* Set up RTC */
       var room = window.location.hash.slice(1);
-      rtc.connect("wss:" + window.location.href.substring(window.location.protocol.length).split('#')[0], room);
+      rtc.connect("ws:" + window.location.href.substring(window.location.protocol.length).split('#')[0], room);
       rtc.on('add remote stream', function(stream, socketId) {
         console.log("ADDING REMOTE STREAM...");
         var clone = cloneVideo('you', socketId);
@@ -285,9 +290,8 @@ function init() {
 }
 
 function checkAllNegotiated(num_negotiated) {
-  console.log(num_negotiated);
   if(num_negotiated == 3) {
-    $(".start-session").add("start-session-enabled");
+    $(".start-session").addClass("start-session-enabled");
     $(".start-session").click(startChat);
   }
 }
@@ -298,8 +302,6 @@ function checkAllNegotiated(num_negotiated) {
 // should add ability to reset negotiations
 
 function initDomInitiation() {
-  var num_negotiated = 0;
-
     fb_responses.on("child_added",function(snapshot){
       var option = snapshot.val()['option'];
       var status = snapshot.val()['status'];
@@ -492,11 +494,66 @@ function initSubInitiation() {
   });
 }
 
+function initRestart() {
+  $('#restart').show();
+  var fb_restart = fb_new_chat_room.child('restart');
+  // $('#restart').click(function() {
+  //   fb_restart.push({'restart': true});
+  // });
+
+  fb_restart.on('child_added', function(snapshot) {
+    $('#videos').hide();
+    $('#sub-controls').hide();
+    $('#dom-controls').hide();
+    $('#terminated').hide();
+    $('#terminated-sent').hide();
+    $('#warning').hide();
+    $('#warning-sent').hide();
+    $('#gagged').hide();
+    $('#blindfolded').hide();
+    $('#restart').hide();
+    if (dom) {
+      $('#dom-initiation').show();
+      $('#request-clamps').show();
+      $('#giveup-clamps').show();
+      $('#request-video').show();
+      $('#giveup-video').show();
+      $('#request-audio').show();
+      $('#giveup-audio').show();
+    } else {
+      $('#sub-initiation').show();
+      $("#awaiting-clamps-request").show();
+      $("#awaiting-video-request").show();
+      $("#awaiting-audio-request").show();
+    }
+    $('.good-to-go').hide();
+    $('.option').removeClass('okay');
+    $('#start-session').removeClass('start-session-enabled');
+
+    toggleAudioMute('#them');
+    toggleAudioMute('#you');
+    // take away start session class and functionality
+
+    // remove classes from blindfold and gag and set their text back to what it should be
+
+    clamps_on = false;
+    gagged = false;
+    blindfolded = false;
+    num_negotiated = 0;
+
+    // TODO: turn clamps off!
+
+  });
+
+}
+
 
 /* Unhide video and show/activate the appropriate controls */
 function startChat() {
-  $(".initiation").remove(); // take away the initiation elements
+  $(".initiation").hide(); // take away the initiation elements
   $("#videos").show(); // show the videos
+
+  initRestart();
 
   var fb_commands = fb_new_chat_room.child('commands');
   var fb_warnings = fb_new_chat_room.child('warnings');
@@ -504,72 +561,113 @@ function startChat() {
   toggleAudioMute('#them');
   toggleAudioMute('#you');
 
-  // if(dom) {
-  //   $("#dom-controls").show();
-  //   if (control_audio) {
-  //     $("#gag").onclick(function() {
-  //       fb_commands.push({'command': 'gag'});
-  //       // send signal to their end to turn off their audio, show them that this has happened
-  //     });
-  //   } else {
-  //     $("#gag").hide();
-  //   }
+  if(dom) {
+    $("#dom-controls").show();
+    if (control_audio) {
+      $("#gag").click(function() {
+        fb_commands.push({'command': 'gag'});
+        toggleAudioMute('#them');
+        if (gagged) {
+          $('#gag').text('gag');
+          $('#gag').removeClass('gag-active');
+        } else {
+          $('#gag').text('ungag');
+          $('#gag').addClass('gag-active');
+        }
+        gagged = !gagged;
+      });
+    } else {
+      $("#gag").hide();
+    }
 
-  //   if (control_video) {
-  //     $("#blindfold").onclick(function() {
-  //       fb_commands.push({'command': 'blindfold'});
-  //       // just turn off my video, but send them a signal to show them that this has happened
-  //     });
-  //   } else {
-  //     $("#blindfold").hide();
-  //   }
+    if (control_video) {
+      $("#blindfold").click(function() {
+        fb_commands.push({'command': 'blindfold'});
+        if (blindfolded) {
+          $('#blindfold').text('blindfold');
+          $('#blindfold').removeClass('blindfold-active');
+        } else {
+          $('#blindfold').text('remove blindfold');
+          $('#blindfold').addClass('blindfold-active');
+        }
+        blindfolded = !blindfolded;
+      });
+    } else {
+      $("#blindfold").hide();
+    }
 
-  //   if (control_clamps) {
-  //     $("#clamp").onclick(function() {
-  //       clamps_on = !clamps_on;
-  //       fb_commands.push({'command': 'clamp'});
-  //       // toggle clamps on, send signal to clamps to toggle on/off, and send signal to them to show that this has happened
-  //     });
-  //   } else {
-  //     $("#clamp").hide();
-  //   }
+    if (control_clamps) {
+      $("#clamp").click(function() {
+        clamps_on = !clamps_on;
+        fb_commands.push({'command': 'clamp'});
+        // TODO: send signal to clamps to toggle on/off
+      });
+    } else {
+      $("#clamp").hide();
+    }
 
-  //   // Listen for signals from sub
-  //   fb_warnings.on("child_added",function(snapshot){
-  //     var warning = snapshot.val()['warning'];
-  //     if (warning == 'slow') {
-  //       // show slow signal
-  //     } else {
-  //       // hide video and dom controls, show stop signal
-  //     }
-  //   }
+    // Listen for signals from sub
+    fb_warnings.on("child_added",function(snapshot){
+      var warning = snapshot.val()['warning'];
+      if (warning == 'slow') {
+        $('#warning').show();
+        setInterval(function(){$('#warning').hide();}, 5000);
+      } else {
+        // hide video and dom controls, show stop signal
+        toggleAudioMute('#you');
+        toggleAudioMute('#them');
+        $('#videos').hide();
+        $('#warning').hide();
+        $('#terminated').show();
+        $('#dom-controls').hide();
+      }
+    });
 
-  // } else {
-  //   $("#sub-controls").show();
-  //   $("#slow").onclick(function() {
-  //     fb_warnings.push({'warning': 'slow'});
-  //     // send signal to dom to SLOW
-  //   });
-  //   $("#stop").onclick(function() {
-  //     fb_warnings.push({'warning': 'stop'});
-  //     // send signal to dom to STOP
-  //     // hide videos and turn off controls
-  //   });
+  } else {
+    $("#sub-controls").show();
+    $("#slow").click(function() {
+      fb_warnings.push({'warning': 'slow'});
+      $('#warning-sent').show();
+      setInterval(function(){$('#warning-sent').hide();}, 5000);
+    });
+    $("#stop").click(function() {
+      fb_warnings.push({'warning': 'stop'});
+      toggleAudioMute('#you');
+      toggleAudioMute('#them');
+      $('#videos').hide();
+      $('#warning-sent').hide();
+      $('#terminated-sent').show();
+      $('#sub-controls').hide();
+      $('#gagged').hide();
+      $('#blindfolded').hide();
 
-  //   // Listen for dom's signals
-  //   fb_commands.on("child_added",function(snapshot){
-  //     var command = snapshot.val()['command'];
-  //     if (command == 'gag') {
+      // TODO: turn off clamps!
 
-  //     } else if (command == 'blindfold') {
+    });
 
-  //     } else if (command == 'clamp') {
-
-  //     }
-  //   }
-  // }
-
-
+    // Listen for dom's signals
+    fb_commands.on("child_added",function(snapshot){
+      var command = snapshot.val()['command'];
+      console.log(command);
+      if (command == 'gag') {
+        toggleAudioMute('#you');
+        if (gagged) {
+          $('#gagged').hide();
+        } else {
+          $('#gagged').show();
+        }
+        gagged = !gagged;
+      } else if (command == 'blindfold') {
+        toggleVideoDisplay('#them');
+        if (blindfolded) {
+          $('#blindfolded').hide();
+        } else {
+          $('#blindfolded').show();
+        }
+        blindfolded = !blindfolded;
+      }
+    });
+  }
 }
 
 window.onresize = function(event) {
