@@ -18,6 +18,14 @@ var blindfolded = false;
 var num_negotiated = 0;
 var restarted = false;
 
+function setAftercareStyles() {
+  /* Insert style changes for aftercare here. Example:
+
+  $('#element').addClass('element-aftercare');
+  
+  */
+}
+
 function getNumPerRow() {
   var len = videos.length;
   var biggest;
@@ -499,6 +507,7 @@ function initSubInitiation() {
   });
 }
 
+// this gets buggy if 2nd partner never started first sesh and 1st tries to initiate a new negotiation
 function initRestart() {
   $('#restart').show();
   
@@ -519,6 +528,7 @@ function initRestart() {
       $('#gagged').hide();
       $('#blindfolded').hide();
       $('#restart').hide();
+      $('#aftercare').hide();
       if (dom) {
         $('#dom-initiation').show();
         $('#request-clamps').show();
@@ -561,6 +571,26 @@ function initRestart() {
   restarted = true;
 }
 
+function removeControlElements() {
+  var fb_aftercare = fb_new_chat_room.child('aftercare');
+  fb_aftercare.on('child_added', function(snapshot) {
+
+    $('#sub-controls').hide();
+    $('#dom-controls').hide();
+    $('#terminated').hide();
+    $('#terminated-sent').hide();
+    $('#warning').hide();
+    $('#warning-sent').hide();
+    $('#gagged').hide();
+    $('#blindfolded').hide();
+    $('#restart').hide();
+    $('#aftercare').hide();
+
+    setAftercareStyles();
+
+  });
+}
+
 
 /* Unhide video and show/activate the appropriate controls */
 function startChat() {
@@ -575,6 +605,8 @@ function startChat() {
 
   toggleAudioMute('#them');
   toggleAudioMute('#you');
+
+  removeControlElements(); // remove control elements on aftercare
 
   if(dom) {
     $("#dom-controls").show();
@@ -641,6 +673,11 @@ function startChat() {
 
   } else {
     $("#sub-controls").show();
+    $("#aftercare").show();
+    $("#aftercare").click(function() {
+      var fb_aftercare = fb_new_chat_room.child('aftercare');
+      fb_aftercare.push({'restart': true});
+    });
     $("#slow").click(function() {
       fb_warnings.push({'warning': 'slow'});
       $('#warning-sent').show();

@@ -17,6 +17,10 @@ been taken away */
   background-color: green;
 }
 
+#aftercare {
+  background-color: purple;
+}
+
 .option {
   float:left;
   padding-left: 25px;
