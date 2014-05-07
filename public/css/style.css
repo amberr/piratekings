@@ -380,7 +380,7 @@ been taken away */
   box-shadow: none;
 }
 
-html, body {
+body {
   height: 100%;
   background-color: #7F8C8D;
   color: white;

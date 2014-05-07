@@ -25,7 +25,11 @@ function setAftercareStyles() {
   $('#element').addClass('element-aftercare');
 
   */
+//   $("body").animate({
+//     backgroundColor : "green"
+// }, 5000);
 
+  $('body').css('background-color', '#97AE5C');
   $('#messages').addClass('messages-aftercare')
   $('#chatinput').addClass('chatinput-aftercare')
 
@@ -211,6 +215,11 @@ function initChat() {
       input.value = "";
     }
   }, false);
+  if (dom) {
+    addToChat('Get your partner to join by sharing this link:      ' + window.location.href, 'Dynamixx', 'black');
+  } else {
+    addToChat('Send your partner a warning signal by hitting SLOW, or end the session by hitting STOP', 'Dynamixx', 'black');
+  }
   rtc.on(chat.event, function() {
     var data = chat.recv.apply(this, arguments);
     addToChat(data.messages, partner, data.color.toString(16));
