@@ -56,12 +56,12 @@ function setWH(video, i) {
   var perRow = getNumPerRow();
   var perColumn = Math.ceil(videos.length / perRow);
   var width = Math.floor((window.innerWidth) / perRow);
-  var height = Math.floor((window.innerHeight - 190) / perColumn);
+  var height = Math.floor((window.innerHeight) / perColumn);
   video.width = width;
   video.height = height;
-  video.style.position = "absolute";
-  video.style.left = (i % perRow) * width + "px";
-  video.style.top = Math.floor(i / perRow) * height + "px";
+  video.style.position = "relative";
+  //video.style.left = (i % perRow) * width + "px";
+  //video.style.top = Math.floor(i / perRow) * height + "px";
 }
 
 
@@ -550,10 +550,10 @@ function initRestart() {
       $('#them').prop('muted', false);
       $('#you').prop('muted', false);
 
-      $('#blindfold').text('blindfold');
+      $('#blindfold').text('<img src=/mute.png class=images><br>Blindfold');
       $('#blindfold').removeClass('blindfold-active');
 
-      $('#gag').text('gag');
+      $('#gag').text('<img src=/mute.png class=images><br>Gag');
       $('#gag').removeClass('gag-active');
 
       clamps_on = false;

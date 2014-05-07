@@ -107,28 +107,13 @@
     </center>
     </div>
 
-    
-
-
-
     <div id="videos">
         <div id="you-overlay" class="overlay">
-          <video id="you" class="flip" autoplay width="263" height="200" style="position: absolute; left: 0px; bottom: 0px;"></video>
+          <video id="you" class="flip" autoplay width="100" height="80" style="position: absolute; left: 0px; bottom: 0px;"></video>
         </div>
     </div>
 
-    <div id="dom-controls" style="display:none">
-      <div id="gag">gag</div>
-      <div id="blindfold">blindfold</div>
-      <div id="clamp" class="onoffswitch">
-        Clamps:
-        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
-        <label class="onoffswitch-label" for="myonoffswitch">
-            <div class="onoffswitch-inner"></div>
-            <div class="onoffswitch-switch"></div>
-        </label>
-    </div>
-    </div>
+    
 
     <div id="terminated" style="display:none">This scene has been terminated by the sub.</div>
     <div id="terminated-sent" style="display:none">You have terminated the scene.</div>
@@ -136,18 +121,35 @@
     <div id="warning" style="display:none">Your partner has sent a warning signal. <b>Take it down a notch.</b></div>
     <div id="warning-sent" style="display:none">A warning signal has been sent to your partner.</div>
 
-    <div id="gagged" style="display:none">You've been gagged.</div>
-    <div id="blindfolded" style="display:none">You've been blindfolded.</div>
 
-    <div id="sub-controls" style="display:none">
-      <div id="slow" class="circle">SLOW</div>
-      <div id="stop" class="circle">STOP</div>
-    </div>
-
-    <div id="chatbox">
-        <div id="messages">
+    <div id="controls">
+      <div id="dom-controls" style="display:none">
+        <div id="gag" class="circle"><p></p><img src="/mute.png" class="images" style="width: 50px; margin-top: 15px;"><br/>Gag</div>
+        <div id="blindfold" class="circle"><p></p><img src="/blind.png" class="images" style="width: 50px; margin-top: 15px;"><br/>Blindfold</div>
+        <div id="clamp" class="onoffswitch">
+          <div id="clamptext">Clamps</div>
+          <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+          <label class="onoffswitch-label" for="myonoffswitch">
+          <div class="onoffswitch-inner"></div>
+          <div class="onoffswitch-switch"></div>
+        </label>
         </div>
-        <input id="chatinput" type="text" placeholder="Type your message here..."/>
+      </div>    
+      
+      <div id="gagged" style="display:none">You've been gagged.</div>
+      <div id="blindfolded" style="display:none">You've been blindfolded.</div>
+
+      <div id="sub-controls" style="display:none">
+        <div id="slow" class="circle">SLOW</div>
+        <div id="stop" class="circle">STOP</div>
+      </div>
+
+      <div id="chatbox">
+          <div id="messages">
+          </div>
+          <input id="chatinput" type="text" placeholder="Type your message here..."/>
+      </div>
+
     </div>
 
     
