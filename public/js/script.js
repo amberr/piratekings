@@ -22,8 +22,23 @@ function setAftercareStyles() {
   /* Insert style changes for aftercare here. Example:
 
   $('#element').addClass('element-aftercare');
-  
+
   */
+}
+
+function toggleClamps() {
+  clamps_on = !clamps_on;
+  /* Make call to url that will toggle clamps. Example:
+  
+  $.get( "ajax/test.html", function(data) {
+    alert( "Load was performed." );
+  });
+  
+  The function argument gets called when the request completes. It is optional.
+
+  */
+
+
 }
 
 function getNumPerRow() {
@@ -556,7 +571,6 @@ function initRestart() {
       $('#gag').text('gag');
       $('#gag').removeClass('gag-active');
 
-      clamps_on = false;
       gagged = false;
       blindfolded = false;
       control_video = false;
@@ -564,7 +578,9 @@ function initRestart() {
       control_clamps = false;
       num_negotiated = 0;
 
-      // TODO: turn clamps off!
+      if(clamps_on) {
+        toggleClamps();
+      }
 
     });
   }
@@ -646,9 +662,8 @@ function startChat() {
 
     if (control_clamps) {
       $("#clamp").click(function() {
-        clamps_on = !clamps_on;
         fb_commands.push({'command': 'clamp'});
-        // TODO: send signal to clamps to toggle on/off
+        toggleClamps();
       });
     } else {
       $("#clamp").hide();
@@ -694,7 +709,9 @@ function startChat() {
       $('#gagged').hide();
       $('#blindfolded').hide();
 
-      // TODO: turn off clamps!
+      if(clamps_on) {
+        toggleClamps();
+      }
 
     });
 
