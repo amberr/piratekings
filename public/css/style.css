@@ -6,6 +6,10 @@ been taken away */
 }
 
 
+.partner-video{
+  border-radius: 50px;
+}
+
 .initiation {
   top:30%;
   left:30%;
@@ -25,12 +29,12 @@ been taken away */
   color:white;
   text-align: center;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-  background: #27ae60;
+  background: #95a5a6;
   border: 0;
-  border-bottom: 2px solid #219d55;
+  border-bottom: 2px solid #7f8c8d;
   cursor: pointer;
-  -webkit-box-shadow: inset 0 -2px #219d55;
-  box-shadow: inset 0 -2px #219d55;
+  -webkit-box-shadow: inset 0 -2px #7f8c8d;
+  box-shadow: inset 0 -2px #7f8c8d;
   margin-top: 10px;
   margin-left: 10px;
   margin-right: 10px;
@@ -54,12 +58,12 @@ been taken away */
   color:white;
   text-align: center;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-  background: #9b4fba;
+  background: #34495e;
   border: 0;
-  border-bottom: 2px solid #703b85;
+  border-bottom: 2px solid #2c3e50;
   cursor: pointer;
-  -webkit-box-shadow: inset 0 -2px #703b85;
-  box-shadow: inset 0 -2px #703b85;
+  -webkit-box-shadow: inset 0 -2px #2c3e50;
+  box-shadow: inset 0 -2px #2c3e50;
   margin-top: 10px;
   margin-left: 10px;
   margin-right: 10px;
@@ -104,14 +108,53 @@ been taken away */
 #sub-controls{
   float: left;
   margin-right: 50px;
+  margin-bottom: 10px;
 }
 
 .gag-active {
-  color: red;
+  z-index: 99;
+  text-align: center;
+  line-height: 10px;
+  position: relative;
+  vertical-align: middle;
+  padding: 0;
+  font-size: 18px;
+  color: white;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  background: #27ae60;
+  border: 0;
+  font-weight: bold;
+  margin-bottom: 10px;
+  cursor: pointer;
+  -webkit-box-shadow: inset 0 -2px #219d55;
+  box-shadow: inset 0 -2px #219d55;
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
 }
 
 .blindfold-active {
-  color: red;
+  z-index: 99;
+  text-align: center;
+  line-height: 10px;
+  position: relative;
+  vertical-align: middle;
+  padding: 0;
+  font-size: 18px;
+  color: white;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  background: #27ae60;
+  border: 0;
+  font-weight: bold;
+  margin-bottom: 10px;
+  cursor: pointer;
+  -webkit-box-shadow: inset 0 -2px #219d55;
+  box-shadow: inset 0 -2px #219d55;
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
 }
 
 #slow {
@@ -149,7 +192,7 @@ been taken away */
   box-shadow: none;
 }
 
-#gag {
+.gag {
   z-index: 99;
   text-align: center;
   line-height: 10px;
@@ -167,19 +210,22 @@ been taken away */
   cursor: pointer;
   -webkit-box-shadow: inset 0 -2px #c18700;
   box-shadow: inset 0 -2px #c18700;
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
 
   
 }
 
 
-#gag:active {
+.gag:active {
   top: 1px;
   outline: none;
   -webkit-box-shadow: none;
   box-shadow: none;
 }
 
-#blindfold {
+.blindfold {
   z-index: 99;
   text-align: center;
   line-height: 10px;
@@ -197,11 +243,15 @@ been taken away */
   cursor: pointer;
   -webkit-box-shadow: inset 0 -2px #c18700;
   box-shadow: inset 0 -2px #c18700;
+    border-radius: 50%;
+  height: 100px;
+  width: 100px;
+
 
 }
 
 
-#blindfold:active {
+.blindfold:active {
   top: 1px;
   outline: none;
   -webkit-box-shadow: none;
@@ -209,33 +259,45 @@ been taken away */
 }
 
 #warning {
-  z-index: 100;
-  background-color: yellow;
+  z-index: 99999;
+  background-color: #d35400;
+  padding: 5px 5px 5px 5px;
+  text-align: center;
 }
 
 #terminated {
-  z-index: 100;
-  background-color: red;
+  z-index: 99999;
+  background-color: #c0392b;
+  padding: 5px 5px 5px 5px;
+  text-align: center;
 }
 
 #warning-sent {
-  z-index: 100;
-  background-color: #f1a800;
+  z-index: 99999;
+  background-color: #d35400;
+  padding: 5px 5px 5px 5px;
+  text-align: center;
 }
 
 #terminated-sent {
-  z-index: 100;
-  background-color: #be3421;
+  z-index: 99999;
+  background-color: #c0392b;
+  padding: 5px 5px 5px 5px;
+  text-align: center;
 }
 
 #gagged {
-  z-index: 100;
-  background-color: #f1a800;
+  z-index: 99999;
+  background-color: #8e44ad;
+  padding: 5px 5px 5px 5px;
+  text-align: center;
 }
 
 #blindfolded {
-  z-index: 100;
-  background-color: #f1a800;
+  z-index: 99999;
+  background-color: #34495e;
+  padding: 5px 5px 5px 5px;
+  text-align: center;
 }
 
 .okay {
@@ -372,11 +434,12 @@ font-size: 20px;
 #dom-controls{
   float: left;
   margin-right: 50px;
+  margin-right: 40px;
 
 }
 
 
-#chatinput {
+.chatinput {
   background: none repeat scroll 0 0 #666666;
   color: white;
   font: 300 18px/40px 'light','Open Sans',Arial,Helvetica,sans-serif;
@@ -391,7 +454,7 @@ font-size: 20px;
   z-index: 9999;
 }
 
-#messages {
+.messages {
   overflow: scroll;
   background: none repeat scroll 0 0 #666666;
   border: 1px #2C3E50 solid;
@@ -403,7 +466,39 @@ font-size: 20px;
   width: 100%;
   background-color: rgba(255,255,255,1);
   z-index: 9999;
-  height: 200px;
+  height: 280px;
+  border-color: #2C3E50;
+  
+}
+
+.chatinput-aftercare {
+  background: none repeat scroll 0 0 #666666;
+  color: white;
+  font: 300 18px/40px 'light','Open Sans',Arial,Helvetica,sans-serif;
+  height: 40px;
+  border: 1px #2C3E50 solid;
+  color: #2C3E50;
+  letter-spacing: 1px;
+  margin-bottom: 0px;
+  padding: 5px 10px;
+  width: 100%;
+  background-color: #bdda73;
+  z-index: 9999;
+}
+
+.messages-aftercare {
+  overflow: scroll;
+  background: none repeat scroll 0 0 #666666;
+  border: 1px #2C3E50 solid;
+  font: 300 18px/40px 'light','Open Sans',Arial,Helvetica,sans-serif;
+  height: 20%;
+  letter-spacing: 1px;
+  margin-bottom: 0px;
+  padding: 0px 0px;
+  width: 100%;
+  background-color: #bdda73;
+  z-index: 9999;
+  height: 280px;
   border-color: #2C3E50;
   
 }
@@ -431,6 +526,7 @@ font-size: 20px;
   width: 100%;
   margin-left:auto;
   margin-right:auto;
+  z-index: 100;
 }
 
 #initiation{
@@ -563,7 +659,8 @@ font-size: 20px;
 #clamptext{
   font-size: 18px;
   color: white;
-  text-align: left;
+  text-align: center;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
   margin-bottom: 5px;
+  font-weight: bold;
 }
