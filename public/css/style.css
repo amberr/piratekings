@@ -16,6 +16,7 @@ been taken away */
   text-align: center;
   font-family: Verdana;
   display: none;
+  text-align: center;
 }
 
 #restart {
@@ -310,6 +311,7 @@ been taken away */
   text-align: center;
   position: absolute;
   width: 900px;
+  top: 110px;
 }
 
 .okay {
@@ -321,14 +323,19 @@ been taken away */
 
 }
 
+.good-to-go{
+  width: 250px;
+}
+
 .awaiting-response {
-  color: red;
+  color: silver;
   font-style: italic;
+  width: 250px;
   
 }
 
 .images{
-  width: 250px;
+  width: 200px;
 }
 
 .start-session {

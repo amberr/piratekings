@@ -572,10 +572,10 @@ function initRestart() {
       $('#them').prop('muted', false);
       $('#you').prop('muted', false);
 
-      $('#blindfold').text('<img src=/mute.png class=images><br>Blindfold');
+      $('#blindfold').innerHTML('<img src=/mute.png class=images><br>Blindfold');
       $('#blindfold').removeClass('blindfold-active');
 
-      $('#gag').text('<img src=/mute.png class=images><br>Gag');
+      $('#gag').innerHTML('<img src=/mute.png class=images><br>Gag');
       $('#gag').removeClass('gag-active');
 
       gagged = false;
