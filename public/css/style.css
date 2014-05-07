@@ -263,6 +263,8 @@ been taken away */
   background-color: #d35400;
   padding: 5px 5px 5px 5px;
   text-align: center;
+  position: absolute;
+  width: 900px;
 }
 
 #terminated {
@@ -270,6 +272,8 @@ been taken away */
   background-color: #c0392b;
   padding: 5px 5px 5px 5px;
   text-align: center;
+  position: absolute;
+  width: 900px;
 }
 
 #warning-sent {
@@ -277,6 +281,8 @@ been taken away */
   background-color: #d35400;
   padding: 5px 5px 5px 5px;
   text-align: center;
+  position: absolute;
+  width: 900px;
 }
 
 #terminated-sent {
@@ -284,6 +290,8 @@ been taken away */
   background-color: #c0392b;
   padding: 5px 5px 5px 5px;
   text-align: center;
+  position: absolute;
+  width: 900px;
 }
 
 #gagged {
@@ -291,6 +299,8 @@ been taken away */
   background-color: #8e44ad;
   padding: 5px 5px 5px 5px;
   text-align: center;
+  position: absolute;
+  width: 900px;
 }
 
 #blindfolded {
@@ -298,6 +308,8 @@ been taken away */
   background-color: #34495e;
   padding: 5px 5px 5px 5px;
   text-align: center;
+  position: absolute;
+  width: 900px;
 }
 
 .okay {
@@ -434,7 +446,7 @@ font-size: 20px;
 #dom-controls{
   float: left;
   margin-right: 50px;
-  margin-right: 40px;
+  margin-left: 40px;
 
 }
 
@@ -508,6 +520,7 @@ font-size: 20px;
   width: 900px;
   position: absolute;
   bottom: 0px;
+  margin-left: 10px;
   background-color: #7F8C8D;
 }
 
