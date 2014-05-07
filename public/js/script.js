@@ -331,6 +331,7 @@ function init() {
 
 function checkAllNegotiated(num_negotiated) {
   if(num_negotiated == 3) {
+    // num_negotiated = 0;
     $(".start-session").addClass("start-session-enabled");
     $(".start-session").click(function() {
       if ($("#start-session").hasClass('start-session-enabled')) {
@@ -581,11 +582,12 @@ function initRestart() {
       $('#them').prop('muted', false);
       $('#you').prop('muted', false);
 
-      $('#blindfold').innerHTML('<img src=/mute.png class=images><br>Blindfold');
+      $('#blindfold').addClass('blindfold');
+      $('#gag').addClass('gag');
       $('#blindfold').removeClass('blindfold-active');
-
-      $('#gag').innerHTML('<img src=/mute.png class=images><br>Gag');
       $('#gag').removeClass('gag-active');
+
+      console.log($('#gag'));
 
       gagged = false;
       blindfolded = false;
@@ -646,7 +648,6 @@ function startChat() {
       $("#gag").click(function() {
         fb_commands.push({'command': 'gag'});
         toggleAudioMute('#them');
-        console.log('gaggggeeee');
         if (gagged) {
           //$('#gag').text('gag');
           $('#gag').removeClass('gag-active');
