@@ -363,7 +363,11 @@ font-size: 20px;
   /*position: relative;
   right: 0px;
   bottom: 0px;*/
+<<<<<<< HEAD
   width: 100%;
+=======
+  /*width: 100%;*/
+>>>>>>> FETCH_HEAD
   z-index: 999;
   float: left;
 }
