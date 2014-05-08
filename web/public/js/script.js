@@ -37,17 +37,19 @@ function setAftercareStyles() {
 
 function toggleClamps() {
   clamps_on = !clamps_on;
-  /* Make call to url that will toggle clamps. Example:
+  /* Make call to url that will toggle clamps. Example:*/
   
-  $.get( "ajax/test.html", function(data) {
-    alert( "Load was performed." );
-  });
-  
-  The function argument gets called when the request completes. It is optional.
-
-  */
-
-
+  if(clamps_on) {
+    $.post( "https://api.spark.io/v1/devices/50ff6a065067545624240287/servo", { 
+      access_token: '4ef65b4fc9b8b09ed815933889832f43ac449433', 
+      args: '180' } 
+    );
+  } else {
+      $.post( "https://api.spark.io/v1/devices/50ff6a065067545624240287/servo", { 
+      access_token: '4ef65b4fc9b8b09ed815933889832f43ac449433', 
+      args: '0' } 
+    );
+  }
 }
 
 function getNumPerRow() {
