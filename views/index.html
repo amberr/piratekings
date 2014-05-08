@@ -1,0 +1,158 @@
+<html>
+  <head>
+    <title>Dynamixx</title>
+    <link type="text/css" href="/style.css" rel="stylesheet"></link>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Belleza' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+    <script src="/webrtc.io.js"></script>
+    <script src='https://cdn.firebase.com/js/client/1.0.6/firebase.js'></script>
+  </head>
+  <body id="bodyelement" onload="init()">
+    <div id="wrapper">
+
+
+    <div id="headertitle">
+        <span id="title">Dynamixx</span>  
+        <span id="dom-status" class="status" style="display:none">You’re in <b>control!</b></span>
+        <span id="sub-status" class="status" style="display:none">Your <b>partner’s</b> in control.</span>
+        <input type="submit" id="aftercare" value="Initiate aftercare" style="display:none">
+        <input type="submit" id="restart" value="Re-negotiate" style="display:none">
+        
+    </div>
+    <p></p>
+    <div id="dom-initiation" class="initiation">
+     <center>
+      <div id="clamps-control" class="option">
+        <center>
+        <p><b>Step 1:</b> Tactile Control</p>
+        <img src="/clamps.png" class="images" width="200"><br/>
+        <div id="request-clamps" class="request-control">Request control</div><p>
+        <div id="giveup-clamps" class="giveup-control">Give up control</div>
+        <div id="awaiting-clamps-permission" class="awaiting-response" style="display:none">Request sent</div>
+        <div id="clamps-permission-denied" class="request-denied" style="display:none">Request denied</div>
+        <div id="dom-clamps-negotiated" class="good-to-go" style="display:none">OK!</div>
+         </center>
+      </div>
+      
+      <div id="video-control" class="option">
+        <center>
+        <p><b>Step 2:</b> Video Control</p>
+        <img src="/blind.png" class="images"><br/>
+        <div id="request-video" class="request-control">Request control</div><p>
+        <div id="giveup-video" class="giveup-control">Give up control</div>
+        <div id="awaiting-video-permission" class="awaiting-response" style="display:none">Request sent</div>
+        <div id="video-permission-denied" class="request-denied" style="display:none">Request denied</div>
+        <div id="dom-video-negotiated" class="good-to-go" style="display:none">OK!</div>
+         </center>
+      </div>
+
+      <div id="audio-control" class="option">
+        <center>
+        <p><b>Step 3:</b> Audio Control</p>
+        <img src="/mute.png" class="images"><br/>
+        <div id="request-audio" class="request-control">Request control</div><p>
+        <div id="giveup-audio" class="giveup-control">Give up control</div>
+        <div id="awaiting-audio-permission" class="awaiting-response" style="display:none">Request sent</div>
+        <div id="audio-permission-denied" class="request-denied" style="display:none">Request denied</div>
+        <div id="dom-audio-negotiated" class="good-to-go" style="display:none">OK!</div>
+      </center>
+      </div>
+    </center>
+      <center>
+        <input type="submit" class="start-session" value="Start">
+       <!-- <div class="start-session">Start session</div>-->
+      </center>
+  <P>  </p>
+
+    </center>
+    </div>
+
+
+    <div id="sub-initiation" class="initiation">
+      <center>
+      <div id="sub-clamps-control" class="option">
+        <center>
+        <p><b>Step 1:</b> Tactile Control</p>
+        <img src="/clamps.png" class="images"><br/>
+        <div id="awaiting-clamps-request" class="awaiting-response">Waiting for your partner...</div>
+        <div id="grant-clamps" class="request-control" style="display:none">Grant control</div><p>
+        <div id="deny-clamps" class="giveup-control" style="display:none">Deny control</div>
+        <div id="sub-clamps-negotiated" class="good-to-go" style="display:none">OK!</div>
+      </center>
+      </div>
+      <div id="sub-video-control" class="option">
+        <center>
+        <p><b>Step 2:</b> Video Control</p>
+        <img src="/blind.png" class="images"><br/>
+        <div id="awaiting-video-request" class="awaiting-response">Waiting for your partner...</div>
+        <div id="grant-video" class="request-control" style="display:none">Grant control</div><p>
+        <div id="deny-video" class="giveup-control" style="display:none">Deny control</div>
+        <div id="sub-video-negotiated" class="good-to-go" style="display:none">OK!</div>
+        </center>
+      </div>
+      <div id="sub-audio-control" class="option">
+        <center>
+        <p><b>Step 3:</b> Audio Control</p>
+        <img src="/mute.png" class="images"><br/>
+        <div id="awaiting-audio-request" class="awaiting-response">Waiting for your partner...</div>
+        <div id="grant-audio" class="request-control" style="display:none">Grant control</div><p>
+        <div id="deny-audio" class="giveup-control" style="display:none">Deny control</div>
+        <div id="sub-audio-negotiated" class="good-to-go" style="display:none">OK!</div>
+        </center>
+      </div>
+    </center>
+      <input type="submit" class="start-session" id="start-session" value="Start"><br/></br/>
+      <!--<div class="start-session">Start session</div>-->
+    </center>
+    </div>
+
+    <div id="videos">
+        <div id="you-overlay" class="overlay">
+          <video id="you" class="flip" autoplay width="250" height="150" style="position: absolute; left: 0px; bottom: 0px;"></video>
+        </div>
+    </div>
+
+
+    <div id="gagged" style="display:none">You've been silenced.</div>
+    <div id="blindfolded" style="display:none">You've been blindfolded.</div>
+    <div id="terminated" style="display:none">This scene has been terminated by the sub.</div>
+    <div id="terminated-sent" style="display:none">You have terminated the scene.</div>
+
+    <div id="warning" style="display:none">Your partner has sent a warning signal. <b>Take it down a notch.</b></div>
+    <div id="warning-sent" style="display:none">A warning signal has been sent to your partner.</div>
+
+    <div id="controls">
+      <div id="dom-controls" style="display:none">
+        <div id="gag" class="gag"><p></p><img src="/mute.png" class="images" style="width: 50px; margin-top: 15px;"><br/>Silence</div>
+        <div id="blindfold" class="blindfold"><p></p><img src="/blind.png" class="images" style="width: 50px; margin-top: 15px;"><br/>Blindfold</div>
+        <div id="clamp" class="onoffswitch">
+          <div id="clamptext">Tactile</div>
+          <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch">
+          <label class="onoffswitch-label" for="myonoffswitch">
+          <div class="onoffswitch-inner"></div>
+          <div class="onoffswitch-switch"></div>
+        </label>
+        </div>
+      </div>    
+      
+      
+
+      <div id="sub-controls" style="display:none">
+        <div id="slow" class="circle">SLOW</div>
+        <div id="stop" class="circle">STOP</div>
+      </div>
+
+      <div id="chatbox">
+          <div id="messages" class="messages">
+          </div>
+          <input id="chatinput" class="chatinput" type="text" placeholder="Type your message here..."/>
+      </div>
+
+    </div>
+
+    
+
+    <script src="/script.js"></script>
+  </body>
+</html>
