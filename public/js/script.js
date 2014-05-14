@@ -230,7 +230,7 @@ function initChat() {
 
 function toggleAudioMute(div) {
   var isAudioMuted = $(div).prop('muted');
-    if (isAudioMuted) {
+    if (isAudioMuted && div != '#you') { // JENK AF, FIX THIS
       $(div).prop('muted', false);
     } else {
       $(div).prop('muted', true);
