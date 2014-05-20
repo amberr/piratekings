@@ -32,7 +32,7 @@
         <span id="title">Dynamixx</span>  
         <span id="dom-status" class="status" style="display:none">You’re in <b>control!</b></span>
         <span id="sub-status" class="status" style="display:none">Your <b>partner’s</b> in control.</span>
-        <input type="submit" id="aftercare" value="Initiate aftercare">
+        <input type="submit" id="aftercare" value="Initiate aftercare" style="display:none">
 
        
         <input type="submit" id="restart" value="Start over" style="display:none">
@@ -143,12 +143,12 @@
     <div id="warning-sent" style="display:none">A warning signal has been sent to your partner.</div>
 
     <div id="controls">
-      <div id="clamp" class="onoffswitch">
-          <div id="clamptext">Tactile</div>
-          <input type="range" name="points" id="points" value="0" min="0" max="180">
-        </label>
-      </div>
       <div id="dom-controls" style="display:none">
+	      <div id="clamp" class="onoffswitch">
+	          <div id="clamptext">Tactile</div>
+	          <input type="range" name="points" id="points" value="0" min="0" max="180">
+	        </label>
+	      </div>
         <div id="gag" class="gag"><p></p><img src="/mute.png" class="images" style="width: 50px; margin-top: 15px;"><br/>Silence</div>
         <div id="blindfold" class="blindfold"><p></p><img src="/blind.png" class="images" style="width: 50px; margin-top: 15px;"><br/>Blindfold</div>
       </div>    

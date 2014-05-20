@@ -246,7 +246,7 @@ function toggleVideoDisplay(div) {
 }
 
 
-function init() 
+function init() {
   /* Generate new chat hash if needed */
   $("#videos").hide();
   var url_segments = document.location.href.split("#");
