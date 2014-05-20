@@ -29,6 +29,10 @@ app.get('/mute.png', function(req, res) {
   res.sendfile(__dirname + '/public/img/mute.png');
 });
 
+app.get('/tooltip.png', function(req, res) {
+  res.sendfile(__dirname + '/public/img/tooltip.png');
+});
+
 app.get('/script.js', function(req, res) {
   res.sendfile(__dirname + '/public/js/script.js');
 });

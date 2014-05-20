@@ -441,15 +441,17 @@ font-size: 20px;
   /*position:relative;*/
 }
 
+
 #chatbox {
   /*position: relative;
   right: 0px;
   bottom: 0px;*/
   width: 100%;
-  /*width: 100%;*/
+  /*height: 150px;*/
   z-index: 999;
   float: left;
 }
+
 
 #dom-controls{
   float: left;
@@ -474,7 +476,8 @@ font-size: 20px;
   z-index: 9999;
 }
 
-.messages {
+@media all and (max-height: 850px) {
+  .messages {
   overflow: scroll;
   background: none repeat scroll 0 0 #666666;
   border: 1px #2C3E50 solid;
@@ -486,10 +489,31 @@ font-size: 20px;
   width: 100%;
   background-color: rgba(255,255,255,1);
   z-index: 9999;
-  height: 280px;
+  height: 150px;
   border-color: #2C3E50;
-  
+  }
 }
+
+@media all and (min-height: 850px) {
+  .messages {
+  overflow: scroll;
+  background: none repeat scroll 0 0 #666666;
+  border: 1px #2C3E50 solid;
+  font: 300 18px/40px 'light','Open Sans',Arial,Helvetica,sans-serif;
+  height: 20%;
+  letter-spacing: 1px;
+  margin-bottom: 0px;
+  padding: 0px 0px;
+  width: 100%;
+  background-color: rgba(255,255,255,1);
+  z-index: 9999;
+  height: 250px;
+  border-color: #2C3E50;
+  }
+}
+
+
+
 
 .chatinput-aftercare {
   background: none repeat scroll 0 0 #666666;
