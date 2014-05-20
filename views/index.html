@@ -7,6 +7,22 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
     <script src="/webrtc.io.js"></script>
     <script src='https://cdn.firebase.com/js/client/1.0.6/firebase.js'></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+<script>
+  $(function() {
+    $( document ).tooltip();
+  });
+  </script>
+  <style>
+  label {
+    display: inline-block;
+    width: 5em;
+  }
+  </style>
+
   </head>
   <body id="bodyelement" onload="init()">
     <div id="wrapper">
@@ -25,7 +41,7 @@
      <center>
       <div id="clamps-control" class="option">
         <center>
-        <p><b>Step 1:</b> Tactile Control</p>
+        <p><b>Step 1:</b> Tactile Control <a href="#" title="Tooltip protip 1, this is a really really long description"><img src="/tooltip.png" width="15"></a></p>
         <img src="/clamps.png" class="images" width="200"><br/>
         <div id="request-clamps" class="request-control">Request control</div><p>
         <div id="giveup-clamps" class="giveup-control">Give up control</div>
@@ -37,7 +53,7 @@
       
       <div id="video-control" class="option">
         <center>
-        <p><b>Step 2:</b> Video Control</p>
+        <p><b>Step 2:</b> Video Control <a href="#" title="Tooltip protip 1"><img src="/tooltip.png" width="15"></a></p>
         <img src="/blind.png" class="images"><br/>
         <div id="request-video" class="request-control">Request control</div><p>
         <div id="giveup-video" class="giveup-control">Give up control</div>
@@ -49,7 +65,7 @@
 
       <div id="audio-control" class="option">
         <center>
-        <p><b>Step 3:</b> Audio Control</p>
+        <p><b>Step 3:</b> Audio Control <a href="#" title="Tooltip protip 1"><img src="/tooltip.png" width="15"></a></p>
         <img src="/mute.png" class="images"><br/>
         <div id="request-audio" class="request-control">Request control</div><p>
         <div id="giveup-audio" class="giveup-control">Give up control</div>
@@ -73,7 +89,7 @@
       <center>
       <div id="sub-clamps-control" class="option">
         <center>
-        <p><b>Step 1:</b> Tactile Control</p>
+        <p><b>Step 1:</b> Tactile Control <a href="#" title="Tooltip protip 1"><img src="/tooltip.png" width="15"></a></p>
         <img src="/clamps.png" class="images"><br/>
         <div id="awaiting-clamps-request" class="awaiting-response">Waiting for your partner...</div>
         <div id="grant-clamps" class="request-control" style="display:none">Grant control</div><p>
@@ -83,7 +99,7 @@
       </div>
       <div id="sub-video-control" class="option">
         <center>
-        <p><b>Step 2:</b> Video Control</p>
+        <p><b>Step 2:</b> Video Control <a href="#" title="Tooltip protip 1"><img src="/tooltip.png" width="15"></a></p>
         <img src="/blind.png" class="images"><br/>
         <div id="awaiting-video-request" class="awaiting-response">Waiting for your partner...</div>
         <div id="grant-video" class="request-control" style="display:none">Grant control</div><p>
@@ -93,7 +109,7 @@
       </div>
       <div id="sub-audio-control" class="option">
         <center>
-        <p><b>Step 3:</b> Audio Control</p>
+        <p><b>Step 3:</b> Audio Control <a href="#" title="Tooltip protip 1"><img src="/tooltip.png" width="15"></a></p>
         <img src="/mute.png" class="images"><br/>
         <div id="awaiting-audio-request" class="awaiting-response">Waiting for your partner...</div>
         <div id="grant-audio" class="request-control" style="display:none">Grant control</div><p>
