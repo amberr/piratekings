@@ -37,7 +37,7 @@ function setAftercareStyles() {
 
 function adjustClamps(value) {
   /* Make call to url that will toggle clamps. Example:*/
-  
+
   $.post( "https://api.spark.io/v1/devices/50ff6a065067545624240287/servo", { 
       access_token: '4ef65b4fc9b8b09ed815933889832f43ac449433', 
       args: value.toString() } 
@@ -590,6 +590,7 @@ function initRestart() {
       num_negotiated = 0;
 
       adjustClamps(0);
+      $("#points").val(0);
 
     });
   }
@@ -721,6 +722,7 @@ function startChat() {
       $('#blindfolded').hide();
 
       adjustClamps(0);
+      $("#points").val(0);
 
     });
 
