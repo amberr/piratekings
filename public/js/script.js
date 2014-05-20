@@ -29,7 +29,11 @@ function setAftercareStyles() {
 //     backgroundColor : "green"
 // }, 5000);
 
-  $('body').css('background-color', '#97AE5C');
+  $('body').css('background', 'URL("/candles.png")');
+  $('body').css('background-size', 'cover'); 
+  $('body').css('background-repeat', 'no-repeat');
+
+
   $('#messages').addClass('messages-aftercare')
   $('#chatinput').addClass('chatinput-aftercare')
 

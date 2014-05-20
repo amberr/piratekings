@@ -21,6 +21,10 @@ app.get('/clamps.png', function(req, res) {
   res.sendfile(__dirname + '/public/img/clamps.png');
 });
 
+app.get('/candles.png', function(req, res) {
+  res.sendfile(__dirname + '/public/img/candles.png');
+});
+
 app.get('/blind.png', function(req, res) {
   res.sendfile(__dirname + '/public/img/blind.png');
 });
