@@ -113,7 +113,7 @@ function addToChat(msg, user, color) {
   var messages = document.getElementById('messages');
   msg = sanitize(msg);
   if(color) {
-    msg = '<span style="color: ' + color + '; padding-left: 15px">' + user + ': ' + msg + '</span>';
+    msg = '<span class="message" style="color: ' + color + '; padding-left: 15px">' + user + ': ' + msg + '</span>';
   } else {
     msg = '<strong style="padding-left: 15px">' + msg + '</strong>';
   }
@@ -193,7 +193,8 @@ function initChat() {
 
   var input = document.getElementById("chatinput");
   var room = window.location.hash.slice(1);
-  var color = "#" + ((1 << 24) * Math.random() | 0).toString(16);
+
+  var color = dom? "#3366FF" : "#CC0099";
 
   input.addEventListener('keydown', function(event) {
     var key = event.which || event.keyCode;
@@ -241,12 +242,7 @@ function toggleVideoDisplay(div) {
 }
 
 
-function init() {
-
-  $("#aftercare").click(function() {
-      setAftercareStyles();
-    });
-
+function init() 
   /* Generate new chat hash if needed */
   $("#videos").hide();
   var url_segments = document.location.href.split("#");
@@ -617,6 +613,12 @@ function removeControlElements() {
     $('#restart').hide();
     $('#aftercare').hide();
 
+    // show aftercare initiated divs
+    if (dom) {
+      $('#aftercare-dom').show();
+    } else {
+      $('#aftercare-sub').show();
+    }
     setAftercareStyles();
 
   });
