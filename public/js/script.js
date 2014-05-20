@@ -242,6 +242,11 @@ function toggleVideoDisplay(div) {
 
 
 function init() {
+
+  $("#aftercare").click(function() {
+      setAftercareStyles();
+    });
+
   /* Generate new chat hash if needed */
   $("#videos").hide();
   var url_segments = document.location.href.split("#");
