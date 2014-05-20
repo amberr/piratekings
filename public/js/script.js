@@ -29,7 +29,11 @@ function setAftercareStyles() {
 //     backgroundColor : "green"
 // }, 5000);
 
-  $('body').css('background', 'URL("http://cultfit.org/wp-content/uploads/2013/02/cultFit-Beach.jpg")');
+  $('body').css('background', 'URL("/candles.png")');
+  $('body').css('background-size', 'cover'); 
+  $('body').css('background-repeat', 'no-repeat');
+
+
   $('#messages').addClass('messages-aftercare')
   $('#chatinput').addClass('chatinput-aftercare')
 
