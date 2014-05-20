@@ -620,8 +620,10 @@ function removeControlElements() {
     // show aftercare initiated divs
     if (dom) {
       $('#aftercare-dom').show();
+      setInterval(function(){$('#aftercare-dom').hide();}, 7000);
     } else {
       $('#aftercare-sub').show();
+      setInterval(function(){$('#aftercare-sub').hide();}, 7000);
     }
     setAftercareStyles();
 
