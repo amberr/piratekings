@@ -25,13 +25,13 @@ function setAftercareStyles() {
   $('#element').addClass('element-aftercare');
 
   */
-//   $("body").animate({
-//     backgroundColor : "green"
-// }, 5000);
+  $("body").animate({
+    'background-color' : "#B23838"
+}, 5000);
 
-  $('body').css('background', 'URL("/candles.png")');
-  $('body').css('background-size', 'cover'); 
-  $('body').css('background-repeat', 'no-repeat');
+  // $('body').css('background', 'URL("/candles.png")');
+  // $('body').css('background-size', 'cover'); 
+  // $('body').css('background-repeat', 'no-repeat');
 
 
   $('#messages').addClass('messages-aftercare')
