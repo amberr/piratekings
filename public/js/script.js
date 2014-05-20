@@ -12,7 +12,7 @@ var me;
 var partner;
 
 var dom = false;
-var clamps_on = false;
+var clamps_val = 0;
 var gagged = false;
 var blindfolded = false;
 var num_negotiated = 0;
@@ -35,21 +35,14 @@ function setAftercareStyles() {
 
 }
 
-function toggleClamps() {
-  clamps_on = !clamps_on;
+function adjustClamps(value) {
   /* Make call to url that will toggle clamps. Example:*/
   
-  if(clamps_on) {
-    $.post( "https://api.spark.io/v1/devices/50ff6a065067545624240287/servo", { 
+  $.post( "https://api.spark.io/v1/devices/50ff6a065067545624240287/servo", { 
       access_token: '4ef65b4fc9b8b09ed815933889832f43ac449433', 
-      args: '180' } 
+      args: value.toString() } 
     );
-  } else {
-      $.post( "https://api.spark.io/v1/devices/50ff6a065067545624240287/servo", { 
-      access_token: '4ef65b4fc9b8b09ed815933889832f43ac449433', 
-      args: '0' } 
-    );
-  }
+
 }
 
 function getNumPerRow() {
@@ -589,8 +582,6 @@ function initRestart() {
       $('#blindfold').removeClass('blindfold-active');
       $('#gag').removeClass('gag-active');
 
-      console.log($('#gag'));
-
       gagged = false;
       blindfolded = false;
       control_video = false;
@@ -598,9 +589,7 @@ function initRestart() {
       control_clamps = false;
       num_negotiated = 0;
 
-      if(clamps_on) {
-        toggleClamps();
-      }
+      adjustClamps(0);
 
     });
   }
@@ -684,10 +673,9 @@ function startChat() {
     }
 
     if (control_clamps) {
-      $("#clamp").click(function() {
-        fb_commands.push({'command': 'clamp'});
-        toggleClamps();
-      });
+      $("#points").change(function() {
+        adjustClamps($("#points").val())
+      })
     } else {
       $("#clamp").hide();
     }
@@ -732,9 +720,7 @@ function startChat() {
       $('#gagged').hide();
       $('#blindfolded').hide();
 
-      if(clamps_on) {
-        toggleClamps();
-      }
+      adjustClamps(0);
 
     });
 
