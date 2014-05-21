@@ -348,12 +348,9 @@ function checkAllNegotiated(num_negotiated) {
               toggleAudioMute('#them');
               $('#them').show();
               $('#waiting').hide();
-              $("#messages").removeClass("messages");
-              $("#messages").addClass("messages-final");
           }
         });
         fb_started.push({'partner': dom});
-
         startChat();
       }
     });
@@ -576,17 +573,7 @@ function initSubInitiation() {
 // this gets buggy if 2nd partner never started first sesh and 1st tries to initiate a new negotiation
 function initRestart() {
   $('#restart').show();
-  
-  $("#messages").removeClass("messages-final");
-  $("#messages").addClass("messages");
 
-    $("body").animate({
-      'background-color' : "#383838"
-    }, 0);
-
-    $("#controls").animate({
-      'background-color' : "#383838"
-    }, 0);
 
   if(!restarted) {
     var fb_restart = fb_new_chat_room.child('restart');
@@ -595,6 +582,18 @@ function initRestart() {
     });
 
     fb_restart.on('child_added', function(snapshot) {
+
+        $("#messages").removeClass("messages-final");
+        $("#messages").addClass("messages");
+
+          $("body").animate({
+            'background-color' : "#383838"
+          }, 0);
+
+          $("#controls").animate({
+            'background-color' : "#383838"
+          }, 0);
+
       $('#videos').hide();
       $('#sub-controls').hide();
       $('#dom-controls').hide();
@@ -679,6 +678,8 @@ function removeControlElements() {
 /* Unhide video and show/activate the appropriate controls */
 function startChat() {
 
+  $("#messages").removeClass("messages");
+  $("#messages").addClass("messages-final");
   $(".initiation").css('display', 'none');
   $("body").animate({
     'background-color' : "#1d1d1d"
