@@ -123,7 +123,7 @@ function addToChat(msg, user, color) {
   } else {
     msg = '<strong style="padding-left: 15px">' + msg + '</strong>';
   }
-  messages.innerHTML = messages.innerHTML + msg + '<br>';
+  messages.innerHTML = messages.innerHTML + msg;
   messages.scrollTop = 10000;
 }
 
@@ -218,9 +218,7 @@ function initChat() {
     }
   }, false);
   if (dom) {
-    addToChat('Get your partner to join by sharing this link:      ' + window.location.href, '<b>Dynamixx</b>', 'black');
-  } else {
-    addToChat('<b>Send your partner a warning signal by hitting <span class="slow-text">SLOW</span>, or end the session by hitting <span class="stop-text">STOP</span></b>', 'Dynamixx', 'black');
+    addToChat('<b>Get your partner to join by sharing this link:      ' + window.location.href + '</b>', '<b>Dynamixx</b>', 'black');
   }
   rtc.on(chat.event, function() {
     var data = chat.recv.apply(this, arguments);
@@ -337,6 +335,20 @@ function checkAllNegotiated(num_negotiated) {
     $(".start-session").addClass("start-session-enabled");
     $(".start-session").click(function() {
       if ($("#start-session").hasClass('start-session-enabled')) {
+
+        fb_started = fb_new_chat_room.child('status').child('started');
+        fb_started.on("child_added",function(snapshot){
+          $("#videos").css('display', 'block');
+          $('#them').hide();
+          if (snapshot.val()['partner'] != dom) {
+              $('#them').show();
+              $('#waiting').hide();
+              $("#messages").removeClass("messages");
+              $("#messages").addClass("messages-final");
+          }
+        });
+        fb_started.push({'partner': dom});
+
         startChat();
       }
     });
@@ -636,10 +648,6 @@ function removeControlElements() {
 /* Unhide video and show/activate the appropriate controls */
 function startChat() {
   $(".initiation").css('display', 'none');
-  $("#videos").css('display', 'block');
-
-  $("#messages").removeClass("messages");
-  $("#messages").addClass("messages-final");
 
   initRestart();
 
@@ -648,6 +656,7 @@ function startChat() {
 
   toggleAudioMute('#them');
   toggleAudioMute('#you');
+
 
   removeControlElements(); // remove control elements on aftercare
 
@@ -716,6 +725,7 @@ function startChat() {
     });
 
   } else {
+    addToChat('<b>Warn your partner with <span class="slow-text">SLOW</span>, or end the session with <span class="stop-text">STOP</span></b>', '<b>Dynamixx</b>', 'black');    
     $("#sub-controls").show();
     $("#aftercare").show();
     $("#aftercare").click(function() {
