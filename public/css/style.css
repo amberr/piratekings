@@ -7,7 +7,7 @@ been taken away */
 
 
 .partner-video{
-  border-radius: 50px;
+  
 }
 
 .initiation {
@@ -637,6 +637,13 @@ input[type='range']::-webkit-slider-thumb {
 
 .flip {
 -webkit-transform: rotateY(180deg);
+position: relative; 
+left: 0px; 
+bottom: 0px; 
+top: 5px; 
+border: 2px solid white;
+z-index: 9999999;
+
 }
 
 .buttonBox {
