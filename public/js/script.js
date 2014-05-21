@@ -37,6 +37,10 @@ function setAftercareStyles() {
 });
 
 
+  console.log($('#dom-status'));
+  $('#dom-status')[0].innerHTML = 'You were in control.'
+  $('#sub-status')[0].innerHTML = 'Your partner was in control.'
+
   $('#messages').addClass('messages-aftercare')
   $('#chatinput').addClass('chatinput-aftercare')
 
@@ -118,10 +122,8 @@ function removeVideo(socketId) {
 
 function addToChat(msg, user, color) {
   var messages = document.getElementById('messages');
-  if(color) {
+  if(msg != '') {
     msg = '<div class="message" style="color: ' + color + '; ">' + user + ': ' + msg + '</div>';
-  } else {
-    msg = '<strong style="padding-left: 15px">' + msg + '</strong>';
   }
   messages.innerHTML = messages.innerHTML + msg;
   messages.scrollTop = 10000;
@@ -341,6 +343,7 @@ function checkAllNegotiated(num_negotiated) {
           $("#videos").css('display', 'block');
           $('#them').hide();
           if (snapshot.val()['partner'] != dom) {
+              toggleAudioMute('#them');
               $('#them').show();
               $('#waiting').hide();
               $("#messages").removeClass("messages");
@@ -372,11 +375,13 @@ function initDomInitiation() {
           $("#clamps-control").addClass("okay");
           control_clamps = true;
           checkAllNegotiated(++num_negotiated);
+          addToChat('<b>Your request for tactile control was accepted!', '<b>Dynamixx</b>', '#2ECC71');
         } else {
           $("#request-clamps").show();
           $("#giveup-clamps").show();
           $("#awaiting-clamps-permission").hide();
           $("#clamps-permission-denied").show();
+          addToChat('<b>Your request for tactile control was denied.', '<b>Dynamixx</b>', 'red');
         }
       } else if (option == 'video') {
         if (status == 'granted') {
@@ -385,11 +390,13 @@ function initDomInitiation() {
           $("#video-control").addClass("okay");
           control_video = true;
           checkAllNegotiated(++num_negotiated);
+          addToChat('<b>Your request for video control was accepted!', '<b>Dynamixx</b>', '#2ECC71');
         } else {
           $("#request-video").show();
           $("#giveup-video").show();
           $("#awaiting-video-permission").hide();
           $("#video-permission-denied").show();
+          addToChat('<b>Your request for video control was denied.', '<b>Dynamixx</b>', 'red');
         }
       } else if (option == 'audio') {
         if (status == 'granted') {
@@ -398,11 +405,13 @@ function initDomInitiation() {
           $("#audio-control").addClass("okay");
           control_audio = true;
           checkAllNegotiated(++num_negotiated);
+          addToChat('<b>Your request for audio control was accepted!', '<b>Dynamixx</b>', '#2ECC71');
         } else {
           $("#awaiting-audio-permission").hide();
           $("#request-audio").show();
           $("#giveup-audio").show();
           $("#audio-permission-denied").show();
+          addToChat('<b>Your request for audio control was denied.', '<b>Dynamixx</b>', 'red');
         }
       }
     });
@@ -477,6 +486,7 @@ function initSubInitiation() {
           $("#sub-clamps-negotiated").show();
           $("#sub-clamps-control").addClass("okay");
           checkAllNegotiated(++num_negotiated);
+          addToChat('<b>Your partner relinquished tactile control.', '<b>Dynamixx</b>', '#2ECC71');
         }
       } else if (option == 'video') {
         if (status == 'requested') {
@@ -488,6 +498,7 @@ function initSubInitiation() {
           $("#sub-video-negotiated").show();
           $("#sub-video-control").addClass("okay");
           checkAllNegotiated(++num_negotiated);
+          addToChat('<b>Your partner relinquished video control.', '<b>Dynamixx</b>', '#2ECC71');
         }
       } else if (option == 'audio') {
         if (status == 'requested') {
@@ -499,6 +510,7 @@ function initSubInitiation() {
           $("#sub-audio-negotiated").show();
           $("#sub-audio-control").addClass("okay");
           checkAllNegotiated(++num_negotiated);
+          addToChat('<b>Your partner relinquished audio control.', '<b>Dynamixx</b>', '#2ECC71');
         }
       }
     });
@@ -510,6 +522,7 @@ function initSubInitiation() {
     $("#sub-clamps-negotiated").show();
     $("#sub-clamps-control").addClass("okay");
     checkAllNegotiated(++num_negotiated);
+    addToChat('<b>You granted tactile control.', '<b>Dynamixx</b>', '#2ECC71');
     console.log("clamps granted");
   });
   $("#deny-clamps").click(function() {
@@ -518,6 +531,7 @@ function initSubInitiation() {
     $("#deny-clamps").hide();
     $("#awaiting-clamps-request").show();
     console.log("clamps denied");
+    addToChat('<b>You denied your partner tactile control. They may request again.', '<b>Dynamixx</b>', 'red');
   });
   $("#grant-video").click(function() {
     fb_responses.push({'option': 'video', 'status': 'granted'});
@@ -526,6 +540,7 @@ function initSubInitiation() {
     $("#sub-video-negotiated").show();
     $("#sub-video-control").addClass("okay");
     checkAllNegotiated(++num_negotiated);
+    addToChat('<b>Your granted video control.', '<b>Dynamixx</b>', '#2ECC71');
     console.log("video granted");
   });
   $("#deny-video").click(function() {
@@ -534,6 +549,7 @@ function initSubInitiation() {
     $("#deny-video").hide();
     $("#awaiting-video-request").show();
     console.log("video denied");
+    addToChat('<b>You denied your partner video control. They may request again.', '<b>Dynamixx</b>', 'red');
   });
   $("#grant-audio").click(function() {
     fb_responses.push({'option': 'audio', 'status': 'granted'});
@@ -542,6 +558,7 @@ function initSubInitiation() {
     $("#sub-audio-negotiated").show();
     $("#sub-audio-control").addClass("okay");
     checkAllNegotiated(++num_negotiated);
+    addToChat('<b>You granted audio control.', '<b>Dynamixx</b>', '#2ECC71');
     console.log("audio granted");
   });
   $("#deny-audio").click(function() {
@@ -550,6 +567,7 @@ function initSubInitiation() {
     $("#deny-audio").hide();
     $("#awaiting-audio-request").show();
     console.log("audio denied");
+    addToChat('<b>You denied your partner audio control. They may request again.', '<b>Dynamixx</b>', 'red');
   });
 }
 
@@ -647,16 +665,20 @@ function removeControlElements() {
 
 /* Unhide video and show/activate the appropriate controls */
 function startChat() {
+
   $(".initiation").css('display', 'none');
+  $("body").animate({
+    'background-color' : "#1d1d1d"
+  }, 5000);
+
+    $("#controls").animate({
+    'background-color' : "#1d1d1d"
+  }, 5000);
 
   initRestart();
 
   var fb_commands = fb_new_chat_room.child('commands');
   var fb_warnings = fb_new_chat_room.child('warnings');
-
-  toggleAudioMute('#them');
-  toggleAudioMute('#you');
-
 
   removeControlElements(); // remove control elements on aftercare
 
@@ -670,10 +692,12 @@ function startChat() {
           //$('#gag').text('gag');
           $('#gag').removeClass('gag-active');
           $('#gag').addClass('gag');
+          addToChat('<b>You unsilenced ' + partner + '.</b>', '<b>Dynamixx</b>', '#c18700');
         } else {
           //$('#gag').text('ungag');
           $('#gag').addClass('gag-active');
           $('#gag').removeClass('gag');
+          addToChat('<b>You silenced ' + partner + '</b>', '<b>Dynamixx</b>', '#8e44ad');
         }
         gagged = !gagged;
       });
@@ -688,8 +712,10 @@ function startChat() {
           //$('#blindfold').text('blindfold');
           $('#blindfold').addClass('blindfold');
           $('#blindfold').removeClass('blindfold-active');
+          addToChat('<b>You removed ' + partner + '\'s blindfold.</b>', '<b>Dynamixx</b>', '#c18700');
         } else {
           //$('#blindfold').text('remove blindfold');
+          addToChat('<b>You blindfolded ' + partner + '</b>', '<b>Dynamixx</b>', '#8e44ad');
           $('#blindfold').addClass('blindfold-active');
           $('#blindfold').removeClass('blindfold');
         }
