@@ -86,10 +86,10 @@ function setWH(video, i) {
   //var width = Math.floor((window.innerWidth) / perRow);
   //var height = Math.floor((window.innerHeight) / perColumn);
   video.width = width;
-  video.height = height-360;
+  video.height = height-380;
   video.style.position = "absolute";
   video.style.left = "0px";
-  video.style.top = "60px";
+  video.style.top = "65px";
 }
 
 
