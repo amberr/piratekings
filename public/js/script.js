@@ -29,6 +29,8 @@ function setAftercareStyles() {
     'background-color' : "#B23838"
 }, 5000, 'swing', function() {
 
+    $('#videos').show();
+
   // if we want to add an image, can do it here, but I think the fade is nice
 
   // $('body').css('background', 'URL("/candles.png")');
@@ -575,6 +577,17 @@ function initSubInitiation() {
 function initRestart() {
   $('#restart').show();
   
+  $("#messages").removeClass("messages-final");
+  $("#messages").addClass("messages");
+
+    $("body").animate({
+      'background-color' : "#383838"
+    }, 0);
+
+    $("#controls").animate({
+      'background-color' : "#383838"
+    }, 0);
+
   if(!restarted) {
     var fb_restart = fb_new_chat_room.child('restart');
     $('#restart').click(function() {
@@ -806,4 +819,8 @@ function startChat() {
 
 window.onresize = function(event) {
   subdivideVideos();
+};
+
+window.onbeforeunload = function(){
+  fb_instance_users.remove();
 };
