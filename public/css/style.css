@@ -14,7 +14,10 @@ been taken away */
 }
 
 .partner-video{
-  
+ background-color: black; 
+ background: URL("http://www.thewholecaboodle.com/wp-content/uploads/2013/07/red-curtains.jpg");
+ background-size:cover;
+ box-shadow:inset 0 0 10px #000000;
 }
 
 .initiation {
@@ -604,7 +607,6 @@ input[type='range']::-webkit-slider-thumb {
   height: 250px;
   border-color: #2C3E50;
   }
-}
 
 
 .chatinput-aftercare {
@@ -654,7 +656,7 @@ position: relative;
 left: 0px; 
 bottom: 0px; 
 top: -11px; 
-border: 2px solid white;
+border: 2px solid black;
 z-index: 9999999;
 
 }
