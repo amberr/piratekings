@@ -27,11 +27,14 @@ function setAftercareStyles() {
   */
   $("body").animate({
     'background-color' : "#B23838"
-}, 5000);
+}, 5000, 'swing', function() {
+
+  // if we want to add an image, can do it here, but I think the fade is nice
 
   // $('body').css('background', 'URL("/candles.png")');
   // $('body').css('background-size', 'cover'); 
   // $('body').css('background-repeat', 'no-repeat');
+});
 
 
   $('#messages').addClass('messages-aftercare')
@@ -115,9 +118,8 @@ function removeVideo(socketId) {
 
 function addToChat(msg, user, color) {
   var messages = document.getElementById('messages');
-  msg = sanitize(msg);
   if(color) {
-    msg = '<span class="message" style="color: ' + color + '; padding-left: 15px">' + user + ': ' + msg + '</span>';
+    msg = '<div class="message" style="color: ' + color + '; ">' + user + ': ' + msg + '</div>';
   } else {
     msg = '<strong style="padding-left: 15px">' + msg + '</strong>';
   }
@@ -216,9 +218,9 @@ function initChat() {
     }
   }, false);
   if (dom) {
-    addToChat('Get your partner to join by sharing this link:      ' + window.location.href, 'Dynamixx', 'black');
+    addToChat('Get your partner to join by sharing this link:      ' + window.location.href, '<b>Dynamixx</b>', 'black');
   } else {
-    addToChat('Send your partner a warning signal by hitting SLOW, or end the session by hitting STOP', 'Dynamixx', 'black');
+    addToChat('<b>Send your partner a warning signal by hitting <span class="slow-text">SLOW</span>, or end the session by hitting <span class="stop-text">STOP</span></b>', 'Dynamixx', 'black');
   }
   rtc.on(chat.event, function() {
     var data = chat.recv.apply(this, arguments);
@@ -633,9 +635,11 @@ function removeControlElements() {
 
 /* Unhide video and show/activate the appropriate controls */
 function startChat() {
-  // $(".initiation").hide(); // take away the initiation elements
   $(".initiation").css('display', 'none');
   $("#videos").css('display', 'block');
+
+  $("#messages").removeClass("messages");
+  $("#messages").addClass("messages-final");
 
   initRestart();
 

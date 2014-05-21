@@ -5,6 +5,13 @@ been taken away */
   margin-bottom; 10px
 }
 
+.slow-text {
+  color: #f1a800;
+}
+
+.stop-text {
+  color: #be3421;
+}
 
 .partner-video{
   border-radius: 50px;
@@ -496,6 +503,7 @@ font-size: 20px;
 
 .message {
   padding-left: 20px;
+  font-family:'Open Sans', sans-serif;
 }
 
 @media all and (max-height: 850px) {
