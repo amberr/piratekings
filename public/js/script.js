@@ -5,6 +5,9 @@ var fb_new_chat_room;
 var fb_instance_users;
 var fb_requests; // requests from the dom during initiation
 var fb_responses; // responses from the sub during intiation
+var fb_logs;
+
+
 var control_clamps; // does dom have the ability to control clamps?
 var control_video; // does dom have the ability to control video?
 var control_audio; // does dom have the ability to control audio?
@@ -18,13 +21,45 @@ var blindfolded = false;
 var num_negotiated = 0;
 var restarted = false;
 
+/* All variables below are for logging purposes */
+var times_tactile_requested;
+var times_tactile_given_up;
+var times_audio_requested;
+var times_audio_given_up;
+var times_video_requested;
+var times_video_given_up;
+
+var times_tactile_granted;
+var times_tactile_denied;
+var times_audio_granted;
+var times_audio_denied;
+var times_video_granted;
+var times_video_denied;
+
+var times_blindfolded;
+var times_gagged;
+var times_clamp_changed;
+
+var times_warned;
+var times_terminated;
+
+var times_chat_used;
+
+var negotiated;
+var time_spent_negotiation;
+var scene_complete;
+var time_spent_scene;
+var time_spent_aftercare;
+
+var times_restarted;
+/* End logging variables */
+
 function setAftercareStyles() {
-  /* Insert style changes for aftercare here. Example:
-  
 
-  $('#element').addClass('element-aftercare');
+time_spent_scene = new Date().getTime() - time_spent_scene;
+scene_complete = true;
+time_spent_aftercare = new Date().getTime();
 
-  */
   $("body").animate({
     'background-color' : "#ff4d4d"
 }, 3000, 'swing', function() {
@@ -218,6 +253,7 @@ function initChat() {
         }
       }));
       addToChat(input.value, me, color);
+      times_chat_used++;
       input.value = "";
     }
   }, false);
@@ -252,6 +288,7 @@ function toggleVideoDisplay(div) {
 
 function init() {
   /* Generate new chat hash if needed */
+  var time_spent_negotiation = new Date().getTime();
   $("#videos").hide();
   var url_segments = document.location.href.split("#");
   var hash = url_segments[1];
@@ -260,6 +297,7 @@ function init() {
   } else {
     /* Connect to Firebase */
     fb_instance = new Firebase("https://dynamixxx.firebaseio.com");
+    fb_logs = fb_instance.child('logs').child(hash);
     fb_new_chat_room = fb_instance.child('chatrooms').child(hash);
     fb_instance_users = fb_new_chat_room.child('users');
     fb_instance_users.once('value', function(snapshot) { 
@@ -340,7 +378,7 @@ function checkAllNegotiated(num_negotiated) {
       if ($("#start-session").hasClass('start-session-enabled')) {
 
         fb_started = fb_new_chat_room.child('status').child('started');
-        $("#videos").css('display', 'block');
+        $("#videos").show();
         $('#them').hide();
 
         fb_started.on("child_added",function(snapshot){
@@ -416,6 +454,7 @@ function initDomInitiation() {
     });
 
   $("#request-clamps").click(function() {
+    times_tactile_requested++;
     $("#request-clamps").hide();
     $("#giveup-clamps").hide();
     $("#awaiting-clamps-permission").show();
@@ -423,6 +462,7 @@ function initDomInitiation() {
     fb_requests.push({'option': 'clamps', 'status': 'requested'});
   });
   $("#giveup-clamps").click(function() {
+    times_tactile_given_up++;
     $("#request-clamps").hide();
     $("#giveup-clamps").hide();
     $("#dom-clamps-negotiated").show();
@@ -433,6 +473,7 @@ function initDomInitiation() {
     fb_requests.push({'option': 'clamps', 'status': 'given up'});
   });
   $("#request-video").click(function() {
+    times_video_requested++;
     $("#request-video").hide();
     $("#giveup-video").hide();
     $("#awaiting-video-permission").show();
@@ -440,6 +481,7 @@ function initDomInitiation() {
     fb_requests.push({'option': 'video', 'status': 'requested'});
   });
   $("#giveup-video").click(function() {
+    times_video_given_up++;
     $("#request-video").hide();
     $("#giveup-video").hide();
     $("#dom-video-negotiated").show();
@@ -450,6 +492,7 @@ function initDomInitiation() {
     fb_requests.push({'option': 'video', 'status': 'given up'});
   });
   $("#request-audio").click(function() {
+    times_audio_requested++;
     $("#request-audio").hide();
     $("#giveup-audio").hide();
     $("#awaiting-audio-permission").show();
@@ -457,6 +500,7 @@ function initDomInitiation() {
     fb_requests.push({'option': 'audio', 'status': 'requested'});
   });
   $("#giveup-audio").click(function() {
+    times_audio_given_up++;
     $("#request-audio").hide();
     $("#giveup-audio").hide();
     $("#dom-audio-negotiated").show();
@@ -515,6 +559,7 @@ function initSubInitiation() {
     });
 
   $("#grant-clamps").click(function() {
+    times_tactile_granted++;
     fb_responses.push({'option': 'clamps', 'status': 'granted'});
     $("#grant-clamps").hide();
     $("#deny-clamps").hide();
@@ -525,6 +570,7 @@ function initSubInitiation() {
     console.log("clamps granted");
   });
   $("#deny-clamps").click(function() {
+    times_tactile_denied++;
     fb_responses.push({'option': 'clamps', 'status': 'denied'});
     $("#grant-clamps").hide();
     $("#deny-clamps").hide();
@@ -533,6 +579,7 @@ function initSubInitiation() {
     addToChat('<b>You denied your partner tactile control. They may request again.', '<b>Dynamixx</b>', 'red');
   });
   $("#grant-video").click(function() {
+    times_video_granted++;
     fb_responses.push({'option': 'video', 'status': 'granted'});
     $("#grant-video").hide();
     $("#deny-video").hide();
@@ -543,6 +590,7 @@ function initSubInitiation() {
     console.log("video granted");
   });
   $("#deny-video").click(function() {
+    times_video_denied++;
     fb_responses.push({'option': 'video', 'status': 'denied'});
     $("#grant-video").hide();
     $("#deny-video").hide();
@@ -551,6 +599,7 @@ function initSubInitiation() {
     addToChat('<b>You denied your partner video control. They may request again.', '<b>Dynamixx</b>', 'red');
   });
   $("#grant-audio").click(function() {
+    times_audio_granted++;
     fb_responses.push({'option': 'audio', 'status': 'granted'});
     $("#grant-audio").hide();
     $("#deny-audio").hide();
@@ -561,6 +610,7 @@ function initSubInitiation() {
     console.log("audio granted");
   });
   $("#deny-audio").click(function() {
+    times_audio_denied++;
     fb_responses.push({'option': 'audio', 'status': 'denied'});
     $("#grant-audio").hide();
     $("#deny-audio").hide();
@@ -578,10 +628,13 @@ function initRestart() {
   if(!restarted) {
     var fb_restart = fb_new_chat_room.child('restart');
     $('#restart').click(function() {
+      times_restarted++;
       fb_restart.push({'restart': true});
     });
 
     fb_restart.on('child_added', function(snapshot) {
+        saveAndResetLogData();
+        time_spent_negotiation = new Date().getTime();
 
         $("#messages").removeClass("messages-final");
         $("#messages").addClass("messages");
@@ -675,6 +728,9 @@ function removeControlElements() {
 
 /* Unhide video and show/activate the appropriate controls */
 function startChat() {
+  time_spent_negotiation = new Date().getTime() - time_spent_negotiation;
+  negotiated = true;
+  time_spent_scene = new Date().getTime();
 
   $("#messages").removeClass("messages");
   $("#messages").addClass("messages-final");
@@ -698,6 +754,7 @@ function startChat() {
     $("#dom-controls").show();
     if (control_audio) {
       $("#gag").click(function() {
+        times_gagged++;
         fb_commands.push({'command': 'gag'});
         toggleAudioMute('#them');
         if (gagged) {
@@ -718,6 +775,7 @@ function startChat() {
     }
 
     if (control_video) {
+      times_blindfolded++;
       $("#blindfold").click(function() {
         fb_commands.push({'command': 'blindfold'});
         if (blindfolded) {
@@ -738,6 +796,7 @@ function startChat() {
     }
 
     if (control_clamps) {
+      times_clamp_changed++;
       $("#points").change(function() {
         adjustClamps($("#points").val())
       })
@@ -771,11 +830,13 @@ function startChat() {
       fb_aftercare.push({'restart': true});
     });
     $("#slow").click(function() {
+      times_warned++;
       fb_warnings.push({'warning': 'slow'});
       $('#warning-sent').show();
       setInterval(function(){$('#warning-sent').hide();}, 5000);
     });
     $("#stop").click(function() {
+      times_terminated++;
       fb_warnings.push({'warning': 'stop'});
       toggleAudioMute('#you');
       toggleAudioMute('#them');
@@ -821,5 +882,85 @@ window.onresize = function(event) {
 };
 
 window.onbeforeunload = function(){
-  fb_instance_users.remove();
+  saveAndResetLogData();
 };
+
+function saveAndResetLogData() {
+
+  if (!negotiation_complete) {
+    time_spent_negotiation = new Date().getTime() - time_spent_negotiation;
+    time_spent_scene = 0;
+    time_spent_aftercare = 0;
+  } else if (!scene_complete) {
+    time_spent_scene = new Date().getTime() - time_spent_scene;
+    time_spent_aftercare = 0;
+  } else if (scene_complete) {
+    time_spent_aftercare = new Date().getTime() - time_spent_aftercare;
+  }
+  if (dom) {
+    fb_logs.push({
+      'role': 'DOM',
+      'times tactile requested': times_tactile_requested,
+      'times tactile given up': times_tactile_given_up,
+      'times audio requested': times_audio_requested,
+      'times audio given up': times_audio_given_up,
+      'times video requested': times_video_requested,
+      'times video given up': times_video_given_up,
+      'times blindfolded': times_blindfolded,
+      'times gagged': times_gagged,
+      'times chat used': times_chat_used,
+      'time spent on negotiation': time_spent_negotiation,
+      'time spent on scene': time_spent_scene,
+      'time spent on aftercare': time_spent_aftercare,
+      'times restarted': times_restarted
+    });
+  } else {
+    fb_logs.push({
+      'role': 'SUB',
+      'times tactile granted': times_tactile_granted,
+      'times tactile denied': times_tactile_denied,
+      'times audio granted': times_audio_granted,
+      'times audio denied': times_audio_denied,
+      'times video granted': times_video_granted,
+      'times video denied': times_video_denied,
+      'times warned': times_warned,
+      'times terminated': times_terminated,
+      'times chat used': times_chat_used,
+      'time spent on negotiation': time_spent_negotiation,
+      'time spent on scene': time_spent_scene,
+      'time spent on aftercare': time_spent_aftercare,
+      'times restarted': times_restarted
+    });
+  }
+
+  times_tactile_requested = 0;
+  times_tactile_given_up = 0;
+  times_audio_requested = 0;
+  times_audio_given_up = 0;
+  times_video_requested = 0;
+  times_video_given_up = 0;
+
+  times_tactile_granted = 0;
+  times_tactile_denied = 0;
+  times_audio_granted = 0;
+  times_audio_denied = 0;
+  times_video_granted = 0;
+  times_video_denied = 0;
+
+  times_blindfolded = 0;
+  times_gagged = 0;
+  times_clamp_changed = 0;
+
+  times_warned = 0;
+  times_terminated = 0;
+
+  times_chat_used = 0;
+
+  negotiated = false;
+  time_spent_negotiation = 0;
+  scene_complete = false;
+  time_spent_scene = 0;
+  time_spent_aftercare = 0;
+
+  times_restarted = 0;
+}
