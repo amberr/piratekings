@@ -14,10 +14,11 @@ been taken away */
 }
 
 .partner-video{
- background-color: black; 
- background: URL("http://www.thewholecaboodle.com/wp-content/uploads/2013/07/red-curtains.jpg");
- background-size:cover;
- box-shadow:inset 0 0 10px #000000;
+  background-color: black;
+  background: URL("http://www.thewholecaboodle.com/wp-content/uploads/2013/07/red-curtains.jpg");
+  background-size:cover;
+  box-shadow:inset 0 0 10px #000000;
+
 }
 
 .initiation {
@@ -276,6 +277,7 @@ been taken away */
   padding: 5px 5px 5px 5px;
   text-align: center;
   position: absolute;
+  top:65px;
   width: 900px;
 }
 
@@ -286,6 +288,7 @@ been taken away */
   text-align: center;
   position: absolute;
   width: 900px;
+  top:65px;
 }
 
 #aftercare-dom {
@@ -295,6 +298,7 @@ been taken away */
   text-align: center;
   position: absolute;
   width: 900px;
+  top:65px;
 }
 
 #aftercare-sub {
@@ -304,6 +308,7 @@ been taken away */
   text-align: center;
   position: absolute;
   width: 900px;
+  top:65px;
 }
 
 #warning-sent {
@@ -312,6 +317,7 @@ been taken away */
   padding: 5px 5px 5px 5px;
   text-align: center;
   position: absolute;
+  top:65px;
   width: 900px;
 }
 
@@ -322,6 +328,7 @@ been taken away */
   text-align: center;
   position: absolute;
   width: 900px;
+  top:65px;
 }
 
 #gagged {
@@ -331,6 +338,7 @@ been taken away */
   text-align: center;
   position: absolute;
   width: 900px;
+  top:65px;
 }
 
 #blindfolded {
@@ -340,7 +348,7 @@ been taken away */
   text-align: center;
   position: absolute;
   width: 900px;
-  top: 110px;
+  top:65px;
 }
 
 .okay {
@@ -553,7 +561,10 @@ input[type='range']::-webkit-slider-thumb {
 }
 
 #waiting {
+  text-align:center;
+  padding-top:30%;
   padding-top:20px;
+
 }
 
 @media all and (max-height: 850px) {
@@ -607,6 +618,7 @@ input[type='range']::-webkit-slider-thumb {
   height: 250px;
   border-color: #2C3E50;
   }
+}
 
 
 .chatinput-aftercare {
@@ -655,8 +667,8 @@ input[type='range']::-webkit-slider-thumb {
 position: relative; 
 left: 0px; 
 bottom: 0px; 
-top: -11px; 
-border: 2px solid black;
+top: 5px; 
+border: 2px solid white;
 z-index: 9999999;
 
 }

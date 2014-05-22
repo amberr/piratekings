@@ -26,8 +26,8 @@ function setAftercareStyles() {
 
   */
   $("body").animate({
-    'background-color' : "#B23838"
-}, 5000, 'swing', function() {
+    'background-color' : "#ff4d4d"
+}, 3000, 'swing', function() {
 
     $('#videos').show();
 
@@ -38,13 +38,13 @@ function setAftercareStyles() {
   // $('body').css('background-repeat', 'no-repeat');
 });
 
+  $(".partner-video").css('background-image', 'none');
+  $(".partner-video").animate({
+    'background-color' : "#383838"
+}, 3000);
 
-  console.log($('#dom-status'));
-  $('#dom-status')[0].innerHTML = 'You were in control.'
-  $('#sub-status')[0].innerHTML = 'Your partner was in control.'
-
-  $('#messages').addClass('messages-aftercare')
-  $('#chatinput').addClass('chatinput-aftercare')
+  $('#dom-status')[0].innerHTML = 'You were in control.';
+  $('#sub-status')[0].innerHTML = 'Your partner was in control.';
 
 }
 
@@ -335,15 +335,15 @@ function init() {
 
 function checkAllNegotiated(num_negotiated) {
   if(num_negotiated == 3) {
-    // num_negotiated = 0;
     $(".start-session").addClass("start-session-enabled");
     $(".start-session").click(function() {
       if ($("#start-session").hasClass('start-session-enabled')) {
 
         fb_started = fb_new_chat_room.child('status').child('started');
+        $("#videos").css('display', 'block');
+        $('#them').hide();
+
         fb_started.on("child_added",function(snapshot){
-          $("#videos").css('display', 'block');
-          $('#them').hide();
           if (snapshot.val()['partner'] != dom) {
               toggleAudioMute('#them');
               $('#them').show();
@@ -664,10 +664,8 @@ function removeControlElements() {
     // show aftercare initiated divs
     if (dom) {
       $('#aftercare-dom').show();
-      setInterval(function(){$('#aftercare-dom').hide();}, 7000);
     } else {
       $('#aftercare-sub').show();
-      setInterval(function(){$('#aftercare-sub').hide();}, 7000);
     }
     setAftercareStyles();
 
