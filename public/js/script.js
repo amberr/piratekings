@@ -938,43 +938,43 @@ function saveAndResetLogData() {
   } else if (scene_complete) {
     time_spent_aftercare = new Date().getTime() - time_spent_aftercare;
   }
-
-  cur_chat = fb_logs.child(window.location.hash.slice(1));
-
-  if (dom) {
-    fb_logs.push({
-      'role': 'DOM',
-      'times tactile requested': times_tactile_requested,
-      'times tactile given up': times_tactile_given_up,
-      'times audio requested': times_audio_requested,
-      'times audio given up': times_audio_given_up,
-      'times video requested': times_video_requested,
-      'times video given up': times_video_given_up,
-      'times blindfolded': times_blindfolded,
-      'times gagged': times_gagged,
-      'times chat used': times_chat_used,
-      'time spent on negotiation': time_spent_negotiation,
-      'time spent on scene': time_spent_scene,
-      'time spent on aftercare': time_spent_aftercare,
-      'times restarted': times_restarted
-    });
-  } else {
-    fb_logs.push({
-      'role': 'SUB',
-      'times tactile granted': times_tactile_granted,
-      'times tactile denied': times_tactile_denied,
-      'times audio granted': times_audio_granted,
-      'times audio denied': times_audio_denied,
-      'times video granted': times_video_granted,
-      'times video denied': times_video_denied,
-      'times warned': times_warned,
-      'times terminated': times_terminated,
-      'times chat used': times_chat_used,
-      'time spent on negotiation': time_spent_negotiation,
-      'time spent on scene': time_spent_scene,
-      'time spent on aftercare': time_spent_aftercare,
-      'times restarted': times_restarted
-    });
+  
+  if(window.location.href.indexOf('localhost:8080') == -1) {
+    if (dom) {
+      fb_logs.push({
+        'role': 'DOM',
+        'times tactile requested': times_tactile_requested,
+        'times tactile given up': times_tactile_given_up,
+        'times audio requested': times_audio_requested,
+        'times audio given up': times_audio_given_up,
+        'times video requested': times_video_requested,
+        'times video given up': times_video_given_up,
+        'times blindfolded': times_blindfolded,
+        'times gagged': times_gagged,
+        'times chat used': times_chat_used,
+        'time spent on negotiation': time_spent_negotiation,
+        'time spent on scene': time_spent_scene,
+        'time spent on aftercare': time_spent_aftercare,
+        'times restarted': times_restarted
+      });
+    } else {
+      fb_logs.push({
+        'role': 'SUB',
+        'times tactile granted': times_tactile_granted,
+        'times tactile denied': times_tactile_denied,
+        'times audio granted': times_audio_granted,
+        'times audio denied': times_audio_denied,
+        'times video granted': times_video_granted,
+        'times video denied': times_video_denied,
+        'times warned': times_warned,
+        'times terminated': times_terminated,
+        'times chat used': times_chat_used,
+        'time spent on negotiation': time_spent_negotiation,
+        'time spent on scene': time_spent_scene,
+        'time spent on aftercare': time_spent_aftercare,
+        'times restarted': times_restarted
+      });
+    }
   }
   initializeLogVars();
 }
