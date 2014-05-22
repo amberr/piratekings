@@ -233,16 +233,7 @@ var dataChannelChat = {
 };
 
 function initChat() {
-  var chat;
-
-  if(rtc.dataChannelSupport) {
-    console.log('initializing data channel chat');
-    chat = dataChannelChat;
-  } else {
-    console.log('initializing websocket chat');
-    chat = websocketChat;
-  }
-
+  var chat = fb_new_chat_room.child('chat');
   var input = document.getElementById("chatinput");
   var room = window.location.hash.slice(1);
 
@@ -251,19 +242,17 @@ function initChat() {
   input.addEventListener('keydown', function(event) {
     var key = event.which || event.keyCode;
     if(key === 13) {
-      chat.send(JSON.stringify({
-        "eventName": "chat_msg",
-        "data": {
-          "messages": input.value,
-          "room": room,
-          "color": color
-        }
-      }));
-      addToChat(input.value, me, color);
+      chat.push({'message': input.value, 'room': room, 'color': color, 'partner': me});
       times_chat_used++;
       input.value = "";
     }
-  }, false);
+  });
+
+  chat.on("child_added", function(snapshot) {
+    console.log(snapshot);
+    addToChat(snapshot.val()['message'], snapshot.val()['partner'], snapshot.val()['color']);
+  });
+
   if (dom) {
     addToChat('<b>Get your partner to join by sharing this link:      ' + window.location.href + '</b>', '<b>Dynamixx</b>', 'black');
   }
