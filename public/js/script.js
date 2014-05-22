@@ -59,6 +59,13 @@ function setAftercareStyles() {
 time_spent_scene = new Date().getTime() - time_spent_scene;
 scene_complete = true;
 time_spent_aftercare = new Date().getTime();
+if($("#them").css('visibility') == 'hidden') {
+  toggleVideoDisplay("#them");
+}
+
+if($("#them").prop('muted')) {
+  toggleAudioMute("#them");
+}
 
   $("body").animate({
     'background-color' : "#ff4d4d"
@@ -287,8 +294,10 @@ function toggleVideoDisplay(div) {
 
 
 function init() {
+
+  initializeLogVars();
+
   /* Generate new chat hash if needed */
-  var time_spent_negotiation = new Date().getTime();
   $("#videos").hide();
   var url_segments = document.location.href.split("#");
   var hash = url_segments[1];
@@ -728,6 +737,7 @@ function removeControlElements() {
 
 /* Unhide video and show/activate the appropriate controls */
 function startChat() {
+  console.log(time_spent_negotiation);
   time_spent_negotiation = new Date().getTime() - time_spent_negotiation;
   negotiated = true;
   time_spent_scene = new Date().getTime();
@@ -887,7 +897,7 @@ window.onbeforeunload = function(){
 
 function saveAndResetLogData() {
 
-  if (!negotiation_complete) {
+  if (!negotiated) {
     time_spent_negotiation = new Date().getTime() - time_spent_negotiation;
     time_spent_scene = 0;
     time_spent_aftercare = 0;
@@ -897,6 +907,9 @@ function saveAndResetLogData() {
   } else if (scene_complete) {
     time_spent_aftercare = new Date().getTime() - time_spent_aftercare;
   }
+
+  cur_chat = fb_logs.child(window.location.hash.slice(1));
+
   if (dom) {
     fb_logs.push({
       'role': 'DOM',
@@ -932,35 +945,38 @@ function saveAndResetLogData() {
       'times restarted': times_restarted
     });
   }
+  initializeLogVars();
+}
 
-  times_tactile_requested = 0;
-  times_tactile_given_up = 0;
-  times_audio_requested = 0;
-  times_audio_given_up = 0;
-  times_video_requested = 0;
-  times_video_given_up = 0;
+function initializeLogVars() {
+    times_tactile_requested = 0;
+    times_tactile_given_up = 0;
+    times_audio_requested = 0;
+    times_audio_given_up = 0;
+    times_video_requested = 0;
+    times_video_given_up = 0;
 
-  times_tactile_granted = 0;
-  times_tactile_denied = 0;
-  times_audio_granted = 0;
-  times_audio_denied = 0;
-  times_video_granted = 0;
-  times_video_denied = 0;
+    times_tactile_granted = 0;
+    times_tactile_denied = 0;
+    times_audio_granted = 0;
+    times_audio_denied = 0;
+    times_video_granted = 0;
+    times_video_denied = 0;
 
-  times_blindfolded = 0;
-  times_gagged = 0;
-  times_clamp_changed = 0;
+    times_blindfolded = 0;
+    times_gagged = 0;
+    times_clamp_changed = 0;
 
-  times_warned = 0;
-  times_terminated = 0;
+    times_warned = 0;
+    times_terminated = 0;
 
-  times_chat_used = 0;
+    times_chat_used = 0;
 
-  negotiated = false;
-  time_spent_negotiation = 0;
-  scene_complete = false;
-  time_spent_scene = 0;
-  time_spent_aftercare = 0;
+    negotiated = false;
+    time_spent_negotiation = new Date().getTime();
+    scene_complete = false;
+    time_spent_scene = 0;
+    time_spent_aftercare = 0;
 
-  times_restarted = 0;
+    times_restarted = 0;
 }
