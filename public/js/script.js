@@ -183,7 +183,6 @@ function cloneVideo(domId, socketId) {
   div.appendChild(clone);
   document.getElementById('videos').appendChild(div);
   videos.push(clone);
-  console.log(clone);
   return clone;
 }
 
@@ -429,7 +428,9 @@ function init() {
       });
       rtc.on('disconnect stream', function(data) {
         console.log('remove ' + data);
-        removeVideo(data);
+        $('#them').hide();
+        $('#waiting').text('Partner left the room.');
+        $('#waiting').show();
       });
       initChat();
       dom? initDomInitiation(): initSubInitiation();
@@ -924,7 +925,7 @@ function startChat() {
     'background-color' : "#1d1d1d"
   }, 5000);
 
-    $("#controls").animate({
+  $("#controls").animate({
     'background-color' : "#1d1d1d"
   }, 5000);
 
