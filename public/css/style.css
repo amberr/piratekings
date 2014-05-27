@@ -1,8 +1,6 @@
-/* The overlays currently don't surround their elements, but they need to if we want to show some indication that video has
-been taken away */
-.overlay {
-  display: block;
-  margin-bottom; 10px
+.tooltip {
+  height:20px;
+  width:20px;
 }
 
 .slow-text {
