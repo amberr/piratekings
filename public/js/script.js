@@ -336,6 +336,33 @@ function init() {
         }
         fb_requests = fb_new_chat_room.child('permissions').child('requests');
         fb_responses = fb_new_chat_room.child('permissions').child('responses');
+
+        $.fancybox.open([
+          {
+              afterLoad: function() {
+                  // this.title = '<a href="' + this.href + '">Download</a> ' + this.title;
+                  /* Set lightbox title styles here */
+              },
+              href : 'howdoesitwork.png',
+              title : 'How does it work?',
+              closeBtn: true,
+               helpers : {
+                title: {
+                    type: 'inside',
+                    position: 'top'
+                },
+                overlay : {
+                  css : {
+                    // CSS for overlay background here
+                      'background' : 'rgba(0, 0, 0, 0.5)'
+                  }
+                },
+
+              }
+            }  
+      ], {
+          padding : 0   
+      });
         
         /* Prompt name and add user to chat */
         var username = window.prompt(dom? "What will your partner call you?": "What would you like to be called?");

@@ -17,6 +17,10 @@ app.get('/style.css', function(req, res) {
   res.sendfile(__dirname + '/public/css/style.css');
 });
 
+app.get('/jquery.fancybox.css', function(req, res) {
+  res.sendfile(__dirname + '/public/css/jquery.fancybox.css');
+});
+
 app.get('/clamps.png', function(req, res) {
   res.sendfile(__dirname + '/public/img/clamps.png');
 });
@@ -42,12 +46,44 @@ app.get('/tooltip.png', function(req, res) {
   res.sendfile(__dirname + '/public/img/tooltip.png');
 });
 
+app.get('/howdoesitwork.png', function(req, res) {
+  res.sendfile(__dirname + '/public/img/howdoesitwork.png');
+});
+
 app.get('/script.js', function(req, res) {
   res.sendfile(__dirname + '/public/js/script.js');
 });
 
 app.get('/webrtc.io.js', function(req, res) {
   res.sendfile(__dirname + '/public/js/webrtc.io.js');
+});
+
+app.get('/jquery.fancybox.pack.js', function(req, res) {
+  res.sendfile(__dirname + '/public/js/jquery.fancybox.pack.js');
+});
+
+app.get('/jquery.fancybox-buttons.js', function(req, res) {
+  res.sendfile(__dirname + '/public/js/jquery.fancybox-buttons.js');
+});
+
+app.get('/jquery.fancybox-buttons.css', function(req, res) {
+  res.sendfile(__dirname + '/public/css/jquery.fancybox-buttons.css');
+});
+
+app.get('/fancybox_buttons.png', function(req, res) {
+  res.sendfile(__dirname + '/public/img/fancybox_buttons.png');
+});
+
+app.get('/fancybox_overlay.png', function(req, res) {
+  res.sendfile(__dirname + '/public/img/fancybox_overlay.png');
+});
+
+app.get('/fancybox_loading.gif ', function(req, res) {
+  res.sendfile(__dirname + '/public/img/fancybox_loading.gif');
+});
+
+app.get('/fancybox_sprite.png', function(req, res) {
+  res.sendfile(__dirname + '/public/img/fancybox_sprite.png');
 });
 
 webRTC.rtc.on('chat_msg', function(data, socket) {
