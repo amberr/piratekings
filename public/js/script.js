@@ -88,29 +88,36 @@ $("body").animate({
   $('#dom-status')[0].innerHTML = 'You were in control.';
   $('#sub-status')[0].innerHTML = 'Your partner was in control.';
 
-  var chat = fb_new_chat_room.child('chat');
+
+  fb_stats = fb_new_chat_room.child('stats');
+  var stats = document.getElementById("stats");
+  fb_stats.on("child_added", function(snapshot) {
+    $("#stats").show();
+    stats.innerHTML += '<div class="stat">' + snapshot.val() + '</div';
+  });
+
   if (times_clamp_changed) {
-    chat.push({'message': 'The tactile controls were adjusted ' + times_clamp_changed + ' time(s).', 'color': '#2ECC71', 'partner': 'Dynamixx'});
+    fb_stats.push('The tactile controls were adjusted ' + times_clamp_changed + ' time(s).');
   }
   if (times_blindfolded) {
     b = times_blindfolded / 2;
     if (times_blindfolded % 2) {
       b += 0.5;
     }
-    chat.push({'message': 'The sub was blindfolded ' + b + ' time(s).', 'color': '#2ECC71', 'partner': 'Dynamixx'});
+    fb_stats.push('The sub was blindfolded ' + b + ' time(s).');
   }
   if (times_gagged) {
     g = times_gagged / 2;
     if (times_gagged % 2) {
       g += 0.5;
     }
-    chat.push({'message': 'The sub was silenced ' + g + ' time(s).', 'color': '#2ECC71', 'partner': 'Dynamixx'});
+    fb_stats.push('The sub was silenced ' + g + ' time(s).');
   }
   if (times_warned) {
-    chat.push({'message': 'The dom was warned ' + times_warned + ' time(s).', 'color': 'red', 'partner': 'Dynamixx'});
+    fb_stats.push('The dom was warned ' + times_warned + ' time(s).');
   }
   if (times_terminated) {
-    chat.push({'message': 'The sub ended the chat by hitting STOP.', 'color': 'red', 'partner': 'Dynamixx'});
+    fb_stats.push('The sub ended the chat by hitting STOP.');
   }
 }
 
@@ -305,10 +312,21 @@ function toggleVideoDisplay(div) {
   }
 }
 
+function blinkId(id) {
+  var i = document.getElementById(id);
+  if(i.style.visibility=='hidden') {
+    i.style.visibility='visible';
+  } else {
+    i.style.visibility='hidden';
+  }
+    setTimeout("blinkId('"+id+"')",1000);
+  return true;
+}
 
 function init() {
 
   initializeLogVars();
+  blinkId('muted');
 
   /* Generate new chat hash if needed */
   $("#videos").hide();
@@ -852,7 +870,7 @@ function initWarnings() {
       $("#points").val(0);
 
     });
-    addToChat('<b>Warn your partner with <span class="slow-text">SLOW</span>, or end the session with <span class="stop-text">STOP</span></b>', '<b>Dynamixx</b>', 'black');    
+    addToChat('<b>Warn your partner with <span class="slow-text">WARN</span>, or end the session with <span class="stop-text">STOP</span></b>', '<b>Dynamixx</b>', 'black');    
   }
 }
 
@@ -872,16 +890,21 @@ function initListenControls() {
       toggleAudioMute('#you');
       if (gagged) {
         $('#gagged').hide();
+        $('#muted').css('opacity', '0.0');
       } else {
         $('#gagged').show();
+        $('#muted').css('opacity', '1.0');
       }
       gagged = !gagged;
     } else if (command == 'blindfold') {
-      toggleVideoDisplay('#them');
       if (blindfolded) {
         $('#blindfolded').hide();
+        $('#them').removeClass('blur');
+        $('#you').removeClass('blur');
       } else {
         $('#blindfolded').show();
+        $('#them').addClass('blur');
+        $('#you').addClass('blur');
       }
       blindfolded = !blindfolded;
     }

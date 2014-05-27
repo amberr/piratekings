@@ -86,6 +86,10 @@ app.get('/fancybox_sprite.png', function(req, res) {
   res.sendfile(__dirname + '/public/img/fancybox_sprite.png');
 });
 
+app.get('/muted.png', function(req, res) {
+  res.sendfile(__dirname + '/public/img/muted.png');
+});
+
 webRTC.rtc.on('chat_msg', function(data, socket) {
   var roomList = webRTC.rtc.rooms[data.room] || [];
 
