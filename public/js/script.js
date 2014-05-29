@@ -68,7 +68,7 @@ if($("#them").prop('muted')) {
 }
 
 $("body").animate({
-    'background-color' : "#ff4d4d"
+    'background-color' : "#27d1bb"
 }, 3000, 'swing', function() {
 
     $('#videos').show();
@@ -82,7 +82,7 @@ $("body").animate({
 
   $(".partner-video").css('background-image', 'none');
   $(".partner-video").animate({
-    'background-color' : "#383838"
+    'background-color' : "#f7d065"
 }, 3000);
 
   $('#dom-status')[0].innerHTML = 'You were in control.';

@@ -46,8 +46,8 @@ app.get('/tooltip.png', function(req, res) {
   res.sendfile(__dirname + '/public/img/tooltip.png');
 });
 
-app.get('/howdoesitwork.png', function(req, res) {
-  res.sendfile(__dirname + '/public/img/howdoesitwork.png');
+app.get('/Instructions-dom.png', function(req, res) {
+  res.sendfile(__dirname + '/public/img/Instructions-dom.png');
 });
 
 app.get('/script.js', function(req, res) {
