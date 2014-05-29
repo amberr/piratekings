@@ -360,7 +360,7 @@ function init() {
                   // this.title = '<a href="' + this.href + '">Download</a> ' + this.title;
                   /* Set lightbox title styles here */
               },
-              href : 'howdoesitwork.png',
+              href : dom? 'Instructions-dom.png': 'Instructions-sub.png',
               title : 'How does it work?',
               closeBtn: true,
                helpers : {

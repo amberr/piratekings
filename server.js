@@ -90,6 +90,14 @@ app.get('/muted.png', function(req, res) {
   res.sendfile(__dirname + '/public/img/muted.png');
 });
 
+app.get('/Instructions-dom.png', function(req, res) {
+  res.sendfile(__dirname + '/public/img/Instructions-dom.png');
+});
+
+app.get('/Instructions-sub.png', function(req, res) {
+  res.sendfile(__dirname + '/public/img/Instructions-sub.png');
+});
+
 webRTC.rtc.on('chat_msg', function(data, socket) {
   var roomList = webRTC.rtc.rooms[data.room] || [];
 
