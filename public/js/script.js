@@ -82,7 +82,7 @@ $("body").animate({
 
   $(".partner-video").css('background-image', 'none');
   $(".partner-video").animate({
-    'background-color' : "#f7d065"
+    'background-color' : "#2ECC71"
 }, 3000);
 
   $('#dom-status')[0].innerHTML = 'You were in control.';
@@ -364,10 +364,7 @@ function init() {
               title : 'How does it work?',
               closeBtn: true,
                helpers : {
-                title: {
-                    type: 'inside',
-                    position: 'top'
-                },
+                title: null,
                 overlay : {
                   css : {
                     // CSS for overlay background here
@@ -930,9 +927,6 @@ function startChat() {
   }, 5000);
 
   if(!restarted) {
-    initGag();
-    initBlindfold();
-    initClamps();
     initWarnings();
     initAfterCare();
     if (!dom) {
@@ -946,13 +940,20 @@ function startChat() {
   if(dom) {
     $("#dom-controls").show();
     if (!control_audio) {
-      $("#gag").hide();
+      $("#gag").css('background-color', '#acb2b7');
+    } else {
+      if(!restarted) { initGag(); }
     }
     if (!control_video) {
-      $("#blindfold").hide();
+      $("#blindfold").css('background-color', '#acb2b7');
+    } else {
+      if(!restarted) { initBlindfold(); }
     }
     if (!control_clamps) {
-      $("#clamp").hide();
+      $('#points').prop('disabled', true);
+      $("#points").css('background-image', 'url(slider_gray.png)');
+    } else {
+      if(!restarted) { initClamps(); }
     }
   } else {
     $("#sub-controls").show();

@@ -30,6 +30,10 @@ app.get('/slider.png', function(req, res) {
   res.sendfile(__dirname + '/public/img/slider.png');
 });
 
+app.get('/slider_gray.png', function(req, res) {
+  res.sendfile(__dirname + '/public/img/slider_gray.png');
+});
+
 app.get('/candles.png', function(req, res) {
   res.sendfile(__dirname + '/public/img/candles.png');
 });
