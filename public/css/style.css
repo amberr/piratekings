@@ -1,8 +1,10 @@
 #init-notification {
-  position: absolute;
+/*  position: absolute;
   top:80%;
   left:5%;
-  max-width: 200px
+  max-width: 200px*/
+  color: black;
+  padding-left:20px;
 }
 
 #muted {

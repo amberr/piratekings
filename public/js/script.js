@@ -435,7 +435,7 @@ function init() {
         $('#muted2').css('left', right + 'px');
 
         $('#init-notification').html('<b>Partner joined!</b>');
-        setInterval(function(){$('#init-notification').hide();}, 10000);
+        setInterval(function(){$('#init-notification').hide();}, 30000);
 
         rtc.attachStream(stream, clone.id);
         subdivideVideos();
