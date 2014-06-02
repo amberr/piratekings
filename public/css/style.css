@@ -7,6 +7,13 @@
   left:28px;
 }
 
+#muted2 {
+  z-index: 999999999999;
+  position: absolute;
+  width: 80px;
+  height: 118px;
+}
+
 .tooltip {
   height:20px;
   width:20px;
@@ -839,4 +846,8 @@ z-index: 9999999;
 
 .blur {
   -webkit-filter: grayscale(0.9) blur(30px);
+}
+
+.blur2 {
+  -webkit-filter: grayscale(0.9) blur(5px);
 }

@@ -181,6 +181,12 @@ function cloneVideo(domId, socketId) {
   div.className = 'overlay';
   clone.id = 'them';
   div.appendChild(clone);
+
+  var muted2 = document.createElement('img');
+  muted2.id = 'muted2';
+  muted2.src='/muted.png';
+  // muted2.style = 'opacity:0';
+  div.appendChild(muted2);
   document.getElementById('videos').appendChild(div);
   videos.push(clone);
   return clone;
@@ -419,6 +425,14 @@ function init() {
         console.log("ADDING REMOTE STREAM...");
         var clone = cloneVideo('you', socketId);
         document.getElementById(clone.id).setAttribute("class", "partner-video");
+        blinkId('muted2');
+        var right = (window.innerWidth)/2 - 50;
+        var bottom = (window.innerHeight)/2 - 150;
+        $('#muted2').css('opacity', 0);
+        $('#muted2').css('top', bottom + 'px');
+        $('#muted2').css('left', right + 'px');
+
+
         rtc.attachStream(stream, clone.id);
         subdivideVideos();
         toggleAudioMute('#them');
@@ -799,6 +813,7 @@ function initGag() {
       $('#gag-text').text('Ungag');
       $('#gag').addClass('gag-active');
       $('#gag').removeClass('gag');
+      $('#muted2').css('opacity', 1.0)
     }
     gagged = !gagged;
   });
@@ -813,10 +828,12 @@ function initBlindfold() {
         $('#blindfold-text').text('Blindfold');
         $('#blindfold').addClass('blindfold');
         $('#blindfold').removeClass('blindfold-active');
+        $('#you').removeClass('blur2');
       } else {
         $('#blindfold-text').text('Unblind');
         $('#blindfold').addClass('blindfold-active');
         $('#blindfold').removeClass('blindfold');
+        $('#you').addClass('blur2');
       }
       blindfolded = !blindfolded;
     });
@@ -898,11 +915,9 @@ function initListenControls() {
       if (blindfolded) {
         $('#blindfolded').hide();
         $('#them').removeClass('blur');
-        $('#you').removeClass('blur');
       } else {
         $('#blindfolded').show();
         $('#them').addClass('blur');
-        $('#you').addClass('blur');
       }
       blindfolded = !blindfolded;
     }
@@ -935,8 +950,6 @@ function startChat() {
     removeControlElements(); // remove control elements on aftercare
   }
 
-  initRestart();
-
   if(dom) {
     $("#dom-controls").show();
     if (!control_audio) {
@@ -959,6 +972,9 @@ function startChat() {
     $("#sub-controls").show();
     $("#aftercare").show();
   }
+
+  initRestart();
+
 }
 
 window.onresize = function(event) {
