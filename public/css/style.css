@@ -1,4 +1,5 @@
 #init-notification {
+<<<<<<< HEAD
   position: absolute;
   bottom: 10px;
   max-width: 200px;
@@ -9,6 +10,14 @@
   border-radius: 5px;
   font-size: 13px;
 
+=======
+/*  position: absolute;
+  top:80%;
+  left:5%;
+  max-width: 200px*/
+  color: black;
+  padding-left:20px;
+>>>>>>> FETCH_HEAD
 }
 
 #muted {
