@@ -290,7 +290,9 @@ function initChat() {
   });
 
   if (dom) {
-    addToChat('<b>Get your partner to join by sharing this link:      ' + window.location.href + '</b>', '<b>Dynamixx</b>', 'black');
+    $('#init-notification').show();
+    $('#init-notification').html('<b>Get your partner to join by sharing this link:      ' + window.location.href + '</b>');
+    // addToChat('<b>Get your partner to join by sharing this link:      ' + window.location.href + '</b>', '<b>Dynamixx</b>', 'black');
   }
   rtc.on(chat.event, function() {
     var data = chat.recv.apply(this, arguments);
@@ -432,6 +434,8 @@ function init() {
         $('#muted2').css('top', bottom + 'px');
         $('#muted2').css('left', right + 'px');
 
+        $('#init-notification').html('<b>Partner joined!</b>');
+        setInterval(function(){$('#init-notification').hide();}, 10000);
 
         rtc.attachStream(stream, clone.id);
         subdivideVideos();
@@ -885,7 +889,10 @@ function initWarnings() {
       $("#points").val(0);
 
     });
-    addToChat('<b>Warn your partner with <span class="slow-text">WARN</span>, or end the session with <span class="stop-text">STOP</span></b>', '<b>Dynamixx</b>', 'black');    
+    $('#init-notification').show();
+    $('#init-notification').html('<b>Warn your partner with <span class="slow-text">WARN</span>, or end the session with <span class="stop-text">STOP</span></b>');
+    setInterval(function(){$('#init-notification').hide();}, 20000);
+    // addToChat('<b>Warn your partner with <span class="slow-text">WARN</span>, or end the session with <span class="stop-text">STOP</span></b>', '<b>Dynamixx</b>', 'black');    
   }
 }
 
