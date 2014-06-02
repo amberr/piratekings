@@ -435,7 +435,7 @@ function init() {
         $('#muted2').css('left', right + 'px');
 
         $('#init-notification').html('<b>Partner joined!</b>');
-        setInterval(function(){$('#init-notification').hide();}, 30000);
+        setInterval(function(){$('#init-notification').hide();}, 15000);
 
         rtc.attachStream(stream, clone.id);
         subdivideVideos();
@@ -813,6 +813,7 @@ function initGag() {
       $('#gag-text').text('Gag');
       $('#gag').removeClass('gag-active');
       $('#gag').addClass('gag');
+      $('#muted2').css('opacity', 0.0)
     } else {
       $('#gag-text').text('Ungag');
       $('#gag').addClass('gag-active');
