@@ -1,8 +1,14 @@
 #init-notification {
   position: absolute;
-  top:80%;
-  left:5%;
-  max-width: 200px
+  bottom: 10px;
+  max-width: 200px;
+  background: #b00000;
+  z-index: 100;
+  left: 10px;
+  padding: 5px 5px 5px 5px;
+  border-radius: 5px;
+  font-size: 13px;
+
 }
 
 #muted {
@@ -607,7 +613,7 @@ input[type='range']::-webkit-slider-thumb {
   padding: 0px 0px;
   width: 100%;
   background-color: rgba(255,255,255,1);
-  z-index: 9999;
+  z-index: 99;
   height: 150px;
   border-color: #2C3E50;
   }
@@ -625,7 +631,7 @@ input[type='range']::-webkit-slider-thumb {
   padding: 0px 0px;
   width: 100%;
   background-color: rgba(255,255,255,1);
-  z-index: 9999;
+  z-index: 99;
   height: 250px;
   border-color: #2C3E50;
   }
@@ -642,7 +648,7 @@ input[type='range']::-webkit-slider-thumb {
   padding: 0px 0px;
   width: 100%;
   background-color: rgba(255,255,255,1);
-  z-index: 9999;
+  z-index: 99;
   height: 250px;
   border-color: #2C3E50;
   }
@@ -661,7 +667,7 @@ input[type='range']::-webkit-slider-thumb {
   padding: 5px 10px;
   width: 100%;
   background-color: #f9dde6;
-  z-index: 9999;
+  z-index: 99;
 }
 
 .messages-aftercare {
@@ -675,7 +681,7 @@ input[type='range']::-webkit-slider-thumb {
   padding: 0px 0px;
   width: 100%;
   background-color: #f9dde6;
-  z-index: 9999;
+  z-index: 99;
   height: 280px;
   border-color: #2C3E50;
   
