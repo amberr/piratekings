@@ -58,6 +58,10 @@ app.get('/script.js', function(req, res) {
   res.sendfile(__dirname + '/public/js/script.js');
 });
 
+app.get('/words.js', function(req, res) {
+  res.sendfile(__dirname + '/public/js/words.js');
+});
+
 app.get('/webrtc.io.js', function(req, res) {
   res.sendfile(__dirname + '/public/js/webrtc.io.js');
 });

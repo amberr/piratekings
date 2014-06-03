@@ -223,14 +223,18 @@ function initFullScreen() {
 }
 
 function setHash() {
-    var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
-    var string_length = 5;
-    var randomstring = '';
-    for(var i = 0; i < string_length; i++) {
-      var rnum = Math.floor(Math.random() * chars.length);
-      randomstring += chars.substring(rnum, rnum + 1);
-    }
+    // var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+    // var string_length = 5;
+    // var randomstring = '';
+    // for(var i = 0; i < string_length; i++) {
+    //   var rnum = Math.floor(Math.random() * chars.length);
+    //   randomstring += chars.substring(rnum, rnum + 1);
+    // }
 
+
+    five_letter_words = words().split(' ');
+    console.log(five_letter_words);
+    randomstring = five_letter_words[Math.floor(Math.random()*five_letter_words.length)];
     window.location.hash = randomstring;
     location.reload();
     return randomstring;
