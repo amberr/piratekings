@@ -1,7 +1,7 @@
 #init-notification {
   position: absolute;
   bottom: 10px;
-  max-width: 200px;
+  max-width: 300px;
   background: #2ECC71;
   z-index: 1000;
   left: 10px;
