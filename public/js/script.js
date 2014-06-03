@@ -223,14 +223,9 @@ function initFullScreen() {
 }
 
 function setHash() {
-    var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
-    var string_length = 5;
-    var randomstring = '';
-    for(var i = 0; i < string_length; i++) {
-      var rnum = Math.floor(Math.random() * chars.length);
-      randomstring += chars.substring(rnum, rnum + 1);
-    }
-
+    five_letter_words = words().split(' ');
+    console.log(five_letter_words);
+    randomstring = five_letter_words[Math.floor(Math.random()*five_letter_words.length)];
     window.location.hash = randomstring;
     location.reload();
     return randomstring;
@@ -435,7 +430,7 @@ function init() {
         $('#muted2').css('left', right + 'px');
 
         $('#init-notification').html('<b>Partner joined!</b>');
-        setInterval(function(){$('#init-notification').hide();}, 30000);
+        setInterval(function(){$('#init-notification').hide();}, 15000);
 
         rtc.attachStream(stream, clone.id);
         subdivideVideos();
@@ -813,6 +808,7 @@ function initGag() {
       $('#gag-text').text('Gag');
       $('#gag').removeClass('gag-active');
       $('#gag').addClass('gag');
+      $('#muted2').css('opacity', 0.0)
     } else {
       $('#gag-text').text('Ungag');
       $('#gag').addClass('gag-active');
@@ -891,7 +887,7 @@ function initWarnings() {
     });
     $('#init-notification').show();
     $('#init-notification').html('<b>Warn your partner with <span class="slow-text">WARN</span>, or end the session with <span class="stop-text">STOP</span></b>');
-    setInterval(function(){$('#init-notification').hide();}, 20000);
+    setInterval(function(){$('#init-notification').hide();}, 60000);
     // addToChat('<b>Warn your partner with <span class="slow-text">WARN</span>, or end the session with <span class="stop-text">STOP</span></b>', '<b>Dynamixx</b>', 'black');    
   }
 }
