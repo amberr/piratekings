@@ -56,6 +56,9 @@ var times_restarted;
 
 function setAftercareStyles() {
 
+$('#muted').css('opacity', '0.0');
+$('#muted2').css('opacity', '0.0');
+
 time_spent_scene = new Date().getTime() - time_spent_scene;
 scene_complete = true;
 time_spent_aftercare = new Date().getTime();
