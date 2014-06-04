@@ -1001,6 +1001,9 @@ window.onresize = function(event) {
 
 window.onbeforeunload = function(){
   saveAndResetLogData();
+  $('#them').hide();
+  $('#waiting').text('Partner left the room.');
+  $('#waiting').show();
 };
 
 function saveAndResetLogData() {
