@@ -350,10 +350,15 @@ function init() {
     fb_logs = fb_instance.child('logs').child(hash);
     fb_new_chat_room = fb_instance.child('chatrooms').child(hash);
     fb_removed = fb_new_chat_room.child('removed');
+    var unloads = 0;
     fb_removed.on("child_added", function(snapshot) {
-      $('#them').hide();
-      $('#waiting').text('Partner left the room.');
-      $('#waiting').show();
+      unloads++;
+      if (unloads > 2) {
+        console.log(unloads);
+        $('#them').hide();
+        $('#waiting').text('Partner left the room.');
+        $('#waiting').show();
+      }
     });
   fb_removed.push('removed');
     fb_instance_users = fb_new_chat_room.child('users');
@@ -1009,13 +1014,9 @@ window.onresize = function(event) {
 
 
 window.onbeforeunload = function (e) {
-  var url_segments = document.location.href.split("#");
-  var hash = url_segments[1];
-  if(hash){
-    fb_removed = fb_new_chat_room.child('removed');
-    fb_removed.push('removed');
-    saveAndResetLogData();
-  }
+  fb_removed = fb_new_chat_room.child('removed');
+  fb_removed.push('removed');
+  saveAndResetLogData();
   return null;
 };
 
