@@ -233,7 +233,6 @@ function initFullScreen() {
 
 function setHash() {
     five_letter_words = words().split(' ');
-    console.log(five_letter_words);
     randomstring = five_letter_words[Math.floor(Math.random()*five_letter_words.length)];
     window.location.hash = randomstring;
     location.reload();
@@ -350,6 +349,13 @@ function init() {
     fb_instance = new Firebase("https://dynamixxx.firebaseio.com");
     fb_logs = fb_instance.child('logs').child(hash);
     fb_new_chat_room = fb_instance.child('chatrooms').child(hash);
+    fb_removed = fb_new_chat_room.child('removed');
+    fb_removed.on("child_added", function(snapshot) {
+      $('#them').hide();
+      $('#waiting').text('Partner left the room.');
+      $('#waiting').show();
+    });
+  fb_removed.push('removed');
     fb_instance_users = fb_new_chat_room.child('users');
     fb_instance_users.once('value', function(snapshot) { 
       var num_users = snapshot.numChildren();
@@ -427,7 +433,8 @@ function init() {
 
       /* Set up RTC */
       var room = window.location.hash.slice(1);
-      rtc.connect("wss:" + window.location.href.substring(window.location.protocol.length).split('#')[0], room);
+      ws_string = (window.location.href.indexOf('localhost:8080') == -1)? 'wss:' : 'ws:';
+      rtc.connect(ws_string + window.location.href.substring(window.location.protocol.length).split('#')[0], room);
       rtc.on('add remote stream', function(stream, socketId) {
         partner_stream = stream;
         console.log("ADDING REMOTE STREAM...");
@@ -448,7 +455,7 @@ function init() {
         toggleAudioMute('#them');
       });
       rtc.on('disconnect stream', function(data) {
-        rtc.connect("wss:" + window.location.href.substring(window.location.protocol.length).split('#')[0], room);
+        rtc.connect(ws_string + window.location.href.substring(window.location.protocol.length).split('#')[0], room);
         // console.log('remove ' + data);
         // $('#them').hide();
         // $('#waiting').text('Partner left the room.');
@@ -999,11 +1006,13 @@ window.onresize = function(event) {
   subdivideVideos();
 };
 
-window.onbeforeunload = function(){
+
+
+window.onbeforeunload = function (e) {
+  fb_removed = fb_new_chat_room.child('removed');
+  fb_removed.push('removed');
   saveAndResetLogData();
-  $('#them').hide();
-  $('#waiting').text('Partner left the room.');
-  $('#waiting').show();
+  return null;
 };
 
 function saveAndResetLogData() {
