@@ -54,10 +54,16 @@ var time_spent_aftercare;
 var times_restarted;
 /* End logging variables */
 
+// Bringing streams into global scope to prevent them being garbage collected
+var partner_stream;
+var my_stream;
+
 function setAftercareStyles() {
 
 $('#muted').css('opacity', '0.0');
 $('#muted2').css('opacity', '0.0');
+$('#you').removeClass('blur2');
+$('#them').removeClass('blur');
 
 time_spent_scene = new Date().getTime() - time_spent_scene;
 scene_complete = true;
@@ -107,20 +113,20 @@ $("body").animate({
     if (times_blindfolded % 2) {
       b += 0.5;
     }
-    fb_stats.push('The sub was blindfolded ' + b + ' time(s).');
+    fb_stats.push('The submissive partner was blindfolded ' + b + ' time(s).');
   }
   if (times_gagged) {
     g = times_gagged / 2;
     if (times_gagged % 2) {
       g += 0.5;
     }
-    fb_stats.push('The sub was silenced ' + g + ' time(s).');
+    fb_stats.push('The submissive partner was silenced ' + g + ' time(s).');
   }
   if (times_warned) {
-    fb_stats.push('The dom was warned ' + times_warned + ' time(s).');
+    fb_stats.push('The partner in control was warned ' + times_warned + ' time(s).');
   }
   if (times_terminated) {
-    fb_stats.push('The sub ended the chat by hitting STOP.');
+    fb_stats.push('The submissive partner ended the chat by hitting STOP.');
   }
 }
 
@@ -412,6 +418,7 @@ function init() {
             document.getElementById('you').src = URL.createObjectURL(stream);
             document.getElementById('you').play();
             toggleAudioMute('#you');
+            my_stream = stream;
           });
         } else {
           alert('Your browser is not supported or you have to turn on flags. In chrome you go to chrome://flags and turn on Enable PeerConnection remember to restart chrome');
@@ -422,6 +429,7 @@ function init() {
       var room = window.location.hash.slice(1);
       rtc.connect("ws:" + window.location.href.substring(window.location.protocol.length).split('#')[0], room);
       rtc.on('add remote stream', function(stream, socketId) {
+        partner_stream = stream;
         console.log("ADDING REMOTE STREAM...");
         var clone = cloneVideo('you', socketId);
         document.getElementById(clone.id).setAttribute("class", "partner-video");
