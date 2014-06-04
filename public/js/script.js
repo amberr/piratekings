@@ -1009,9 +1009,13 @@ window.onresize = function(event) {
 
 
 window.onbeforeunload = function (e) {
-  fb_removed = fb_new_chat_room.child('removed');
-  fb_removed.push('removed');
-  saveAndResetLogData();
+  var url_segments = document.location.href.split("#");
+  var hash = url_segments[1];
+  if(hash){
+    fb_removed = fb_new_chat_room.child('removed');
+    fb_removed.push('removed');
+    saveAndResetLogData();
+  }
   return null;
 };
 
