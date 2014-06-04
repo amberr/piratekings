@@ -960,17 +960,20 @@ function startChat() {
     $("#dom-controls").show();
     if (!control_audio) {
       $("#gag").css('background-color', '#acb2b7');
+      $("#gag").css('opacity', 0.5);
     } else {
       if(!restarted) { initGag(); }
     }
     if (!control_video) {
       $("#blindfold").css('background-color', '#acb2b7');
+      $("#blindfold").css('opacity', 0.5);
     } else {
       if(!restarted) { initBlindfold(); }
     }
     if (!control_clamps) {
       $('#points').prop('disabled', true);
       $("#points").css('background-image', 'url(slider_gray.png)');
+      $("#points").css('opacity', 0.5);
     } else {
       if(!restarted) { initClamps(); }
     }
