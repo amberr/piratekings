@@ -448,10 +448,11 @@ function init() {
         toggleAudioMute('#them');
       });
       rtc.on('disconnect stream', function(data) {
-        console.log('remove ' + data);
-        $('#them').hide();
-        $('#waiting').text('Partner left the room.');
-        $('#waiting').show();
+        rtc.connect("wss:" + window.location.href.substring(window.location.protocol.length).split('#')[0], room);
+        // console.log('remove ' + data);
+        // $('#them').hide();
+        // $('#waiting').text('Partner left the room.');
+        // $('#waiting').show();
       });
       initChat();
       dom? initDomInitiation(): initSubInitiation();
