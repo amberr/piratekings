@@ -444,6 +444,7 @@ function init() {
         $('#them').hide();
         $('#waiting').text('Partner left the room.');
         $('#waiting').show();
+        rtc.connect("ws:" + window.location.href.substring(window.location.protocol.length).split('#')[0], room);
       });
       initChat();
       dom? initDomInitiation(): initSubInitiation();
